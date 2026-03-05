@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>N.O.T.T.L.E.K™ — Painel do Cliente</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#07111F; font-family:system-ui,sans-serif; color:#D8E8F8; }
+  ::-webkit-scrollbar { width:6px; } ::-webkit-scrollbar-track { background:#07111F; }
+  ::-webkit-scrollbar-thumb { background:#1A3050; border-radius:3px; }
+  button { cursor:pointer; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+// ─── CONFIGURAÇÃO DO CLIENTE — edite aqui ───────────────────────────────────
+const CLIENTE = {
+  nome:    "Cliente 01",
+  empresa: "Integradora Solar",
+  inicio:  "Março 2026",
+  prazo:   "30 dias",
+};
+// ────────────────────────────────────────────────────────────────────────────
+
+const SEMANAS = [
+  { sem:"S1", label:"Semana 1", periodo:"Dias 1–7",   cor:"#D4A017", foco:"Diagnóstico completo da operação" },
+  { sem:"S2", label:"Semana 2", periodo:"Dias 8–14",  cor:"#1D4ED8", foco:"Estruturação do Núcleo Comercial" },
+  { sem:"S3", label:"Semana 3", periodo:"Dias 15–21", cor:"#16803C", foco:"Funil, Script e CRM" },
+  { sem:"S4", label:"Semana 4", periodo:"Dias 22–30", cor:"#7C3AED", foco:"Revisão, ajustes e preparação para tráfego" },
+];
+
+const TAREFAS = [
+  // S1
+  { sem:"S1", pilar:"Setup",       pilarcor:"#374151", icon:"⚙️", titulo:"Criar grupo no WhatsApp",           responsavel:"Keltton",          entrega:"Grupo ativo com regras fixadas",                          desc:"Criar grupo com o cliente, definir horários de atualização e regras de comunicação." },
+  { sem:"S1", pilar:"Setup",       pilarcor:"#374151", icon:"⚙️", titulo:"Enviar mensagem de boas-vindas",    responsavel:"Keltton",          entrega:"Mensagem enviada e confirmada pelo cliente",               desc:"Apresentar o processo, cronograma dos 30 dias e o que o cliente pode esperar semana a semana." },
+  { sem:"S1", pilar:"K — KPI",     pilarcor:"#1A1A2E", icon:"⚫", titulo:"Coletar dados históricos",          responsavel:"Cliente",          entrega:"Planilha com faturamento, projetos e ticket médio",        desc:"Faturamento últimos 3 meses, número de projetos fechados, ticket médio e principais fontes de cliente." },
+  { sem:"S1", pilar:"N — Núcleo",  pilarcor:"#16803C", icon:"🟢", titulo:"Definir meta de faturamento mensal",responsavel:"Keltton + Cliente",entrega:"Meta documentada e aprovada",                             desc:"Com base nos dados coletados, definir meta realista para os próximos 90 dias com número, prazo e responsável." },
+  { sem:"S1", pilar:"N — Núcleo",  pilarcor:"#16803C", icon:"🟢", titulo:"Calcular ticket médio e conversão", responsavel:"Keltton",          entrega:"Documento com os 3 indicadores base",                     desc:"Analisar histórico de propostas enviadas vs fechadas. Calcular ticket médio real dos últimos projetos." },
+  { sem:"S1", pilar:"K — KPI",     pilarcor:"#1A1A2E", icon:"⚫", titulo:"Calcular CAC atual",                responsavel:"Keltton",          entrega:"CAC documentado",                                         desc:"Custo total de aquisição por cliente hoje — tempo + dinheiro para fechar cada projeto." },
+  { sem:"S1", pilar:"O — Funil",   pilarcor:"#1D4ED8", icon:"🔵", titulo:"Auditar processo atual de resposta",responsavel:"Keltton + Cliente",entrega:"Mapa do funil atual",                                     desc:"Como o lead chega hoje? Quem responde? Em quanto tempo? Mapear o fluxo real, não o ideal." },
+  // S2
+  { sem:"S2", pilar:"N — Núcleo",  pilarcor:"#16803C", icon:"🟢", titulo:"Definir leads mínimos mensais",     responsavel:"Keltton",          entrega:"Equação: meta ÷ ticket ÷ conversão = leads",              desc:"Com base na meta, ticket médio e conversão: quantos leads precisa gerar por mês para atingir o objetivo." },
+  { sem:"S2", pilar:"N — Núcleo",  pilarcor:"#16803C", icon:"🟢", titulo:"Mapear etapas do funil",            responsavel:"Keltton",          entrega:"Funil documentado com critério por etapa",                desc:"Definir etapas: Lead → Qualificado → Proposta → Negociação → Fechado → Perdido." },
+  { sem:"S2", pilar:"O — Funil",   pilarcor:"#1D4ED8", icon:"🔵", titulo:"Implementar ou estruturar CRM",     responsavel:"Keltton",          entrega:"CRM funcionando com o funil mapeado",                     desc:"Se não tem CRM: configurar Pipedrive ou HubSpot gratuito. Se tem: auditar e reorganizar." },
+  { sem:"S2", pilar:"O — Funil",   pilarcor:"#1D4ED8", icon:"🔵", titulo:"Protocolo de tempo de resposta",    responsavel:"Keltton + Cliente",entrega:"Protocolo escrito aprovado pelo cliente",                  desc:"Regra clara: lead recebe contato em até X minutos. Quem é responsável. O que acontece fora do horário." },
+  { sem:"S2", pilar:"T — Técnica", pilarcor:"#C2410C", icon:"🔴", titulo:"Criar script de qualificação (MQL)",responsavel:"Keltton",          entrega:"Script de qualificação documentado",                      desc:"5 perguntas para qualificar o lead antes de gastar tempo com proposta. Separar lead quente de curioso." },
+  { sem:"S2", pilar:"L — Liderança",pilarcor:"#7C3AED",icon:"🟣", titulo:"Mapear equipe e responsabilidades", responsavel:"Keltton + Cliente",entrega:"Organograma simples com funções",                         desc:"Quem faz o quê hoje. Onde o dono opera no lugar da equipe. Identificar os gargalos humanos." },
+  // S3
+  { sem:"S3", pilar:"T — Técnica", pilarcor:"#C2410C", icon:"🔴", titulo:"Criar script consultivo de vendas", responsavel:"Keltton",          entrega:"Script documentado e revisado com o cliente",             desc:"Roteiro completo: abertura, diagnóstico, apresentação, objeções e fechamento." },
+  { sem:"S3", pilar:"T — Técnica", pilarcor:"#C2410C", icon:"🔴", titulo:"Mapear 5 principais objeções",      responsavel:"Keltton + Cliente",entrega:"Manual de objeções documentado",                          desc:"Com base no histórico: quais objeções aparecem mais? Construir resposta para cada uma." },
+  { sem:"S3", pilar:"O — Funil",   pilarcor:"#1D4ED8", icon:"🔵", titulo:"Estruturar cadência de follow-up",  responsavel:"Keltton",          entrega:"Cadência de 5 etapas com templates",                      desc:"Quantos contatos, em quais dias, com qual mensagem. Do lead novo ao fechamento." },
+  { sem:"S3", pilar:"T — Tráfego", pilarcor:"#D4A017", icon:"🟠", titulo:"Auditar presença digital atual",    responsavel:"Keltton",          entrega:"Relatório de auditoria digital",                          desc:"Instagram, site, Google Meu Negócio. O que está funcionando, faltando e errado." },
+  { sem:"S3", pilar:"L — Liderança",pilarcor:"#7C3AED",icon:"🟣", titulo:"Documentar processos operacionais", responsavel:"Keltton + Cliente",entrega:"3 POPs documentados",                                     desc:"Pelo menos 3 POPs: atendimento de lead, envio de proposta, pós-venda." },
+  { sem:"S3", pilar:"K — KPI",     pilarcor:"#1A1A2E", icon:"⚫", titulo:"Criar dashboard de indicadores",    responsavel:"Keltton",          entrega:"Dashboard com KPIs semanais",                             desc:"Planilha com: leads, propostas, fechamentos, ticket médio, CAC e conversão." },
+  // S4
+  { sem:"S4", pilar:"N — Núcleo",  pilarcor:"#16803C", icon:"🟢", titulo:"Revisão geral: metas vs realidade", responsavel:"Keltton",          entrega:"Relatório de revisão apresentado ao cliente",             desc:"Comparar o que foi definido no início com o que a operação mostra. Ajustar metas se necessário." },
+  { sem:"S4", pilar:"T — Tráfego", pilarcor:"#D4A017", icon:"🟠", titulo:"Planejar primeira campanha",        responsavel:"Keltton",          entrega:"Planejamento de campanha aprovado",                       desc:"Definir objetivo, público, orçamento e oferta. Só após funil estruturado e CRM ativo." },
+  { sem:"S4", pilar:"T — Tráfego", pilarcor:"#D4A017", icon:"🟠", titulo:"Revisar landing page / perfil",     responsavel:"Keltton",          entrega:"Página revisada e aprovada",                              desc:"Página que vai receber o tráfego pago. CTA claro, formulário funcionando, integrado ao CRM." },
+  { sem:"S4", pilar:"E — Escala",  pilarcor:"#0097A7", icon:"🟡", titulo:"Mapear oportunidades de upsell",    responsavel:"Keltton + Cliente",entrega:"Lista de oportunidades identificadas",                     desc:"O&M, BESS, projetos maiores, indicações. Clientes atuais com potencial de upsell imediato." },
+  { sem:"S4", pilar:"K — KPI",     pilarcor:"#1A1A2E", icon:"⚫", titulo:"Reunião de entrega dos 30 dias",    responsavel:"Keltton",          entrega:"Apresentação + plano do mês 2",                           desc:"Apresentar tudo estruturado, indicadores iniciais, plano do próximo mês e prioridades." },
+  { sem:"S4", pilar:"Setup",       pilarcor:"#374151", icon:"⚙️", titulo:"Proposta do mês 2",                 responsavel:"Keltton",          entrega:"Proposta enviada e discutida",                            desc:"Com base nos resultados iniciais, apresentar proposta para continuidade." },
+];
+
+const BG="#07111F", CARD="#0D1B2E", BORD="#1A3050", TEXT="#D8E8F8", MUTED="#5B7EA8", GOLD="#D4A017";
+
+const { useState, useEffect } = React;
+
+function App() {
+  const [semSel, setSemSel]   = useState("S1");
+  const [checks, setChecks]   = useState(() => {
+    try { return JSON.parse(localStorage.getItem("nottlek_checks") || "{}"); } catch { return {}; }
+  });
+  const [aba, setAba]         = useState("tarefas");
+
+  useEffect(() => {
+    try { localStorage.setItem("nottlek_checks", JSON.stringify(checks)); } catch {}
+  }, [checks]);
+
+  const toggle = (i) => setChecks(p => ({ ...p, [i]: !p[i] }));
+  const total  = TAREFAS.length;
+  const done   = Object.values(checks).filter(Boolean).length;
+  const pct    = Math.round((done / total) * 100);
+  const semAtual = SEMANAS.find(s => s.sem === semSel);
+  const COR = semAtual.cor;
+  const tarefasFiltradas = TAREFAS.filter(t => t.sem === semSel);
+  const doneSem = tarefasFiltradas.filter(t => checks[TAREFAS.indexOf(t)]).length;
+
+  const s = (obj) => ({ ...obj });
+
+  return (
+    <div style={{ background:BG, minHeight:"100vh", color:TEXT, fontFamily:"system-ui,sans-serif" }}>
+
+      {/* HEADER */}
+      <div style={{ background:"#040D18", borderBottom:`3px solid ${GOLD}`, padding:"14px 20px" }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", flexWrap:"wrap", gap:10 }}>
+          <div>
+            <div style={{ fontSize:10, color:GOLD, letterSpacing:4, fontFamily:"monospace", marginBottom:4 }}>
+              N.O.T.T.L.E.K™ · KELTTON BELIZARIO
+            </div>
+            <div style={{ fontSize:20, fontWeight:700, color:"#FFF" }}>
+              {CLIENTE.nome} · {CLIENTE.empresa}
+            </div>
+            <div style={{ fontSize:13, color:MUTED, marginTop:2 }}>
+              {CLIENTE.inicio} · {CLIENTE.prazo} de estruturação
+            </div>
+          </div>
+          <div style={{ background:CARD, border:`1px solid ${BORD}`, borderRadius:10, padding:"10px 18px", display:"flex", alignItems:"center", gap:16 }}>
+            <div style={{ textAlign:"center" }}>
+              <div style={{ fontSize:28, fontWeight:700, color: pct===100 ? "#6EE7B7" : GOLD }}>{pct}%</div>
+              <div style={{ fontSize:11, color:MUTED, fontFamily:"monospace" }}>concluído</div>
+            </div>
+            <div>
+              <div style={{ fontSize:13, color:TEXT }}>{done}/{total} tarefas</div>
+              <div style={{ fontSize:11, color:MUTED, marginTop:2 }}>em 30 dias</div>
+            </div>
+          </div>
+        </div>
+        <div style={{ height:6, background:BORD, borderRadius:3, marginTop:14, overflow:"hidden" }}>
+          <div style={{ height:"100%", borderRadius:3, width:`${pct}%`, background:`linear-gradient(90deg,${GOLD},#6EE7B7)`, transition:"width 0.4s ease" }} />
+        </div>
+      </div>
+
+      {/* ABAS */}
+      <div style={{ display:"flex", background:"#040D18", borderBottom:`1px solid ${BORD}` }}>
+        {[{id:"tarefas",label:"✅ Checklist 30 dias"},{id:"visao",label:"📊 Visão do Processo"}].map(a => (
+          <button key={a.id} onClick={() => setAba(a.id)} style={{
+            padding:"12px 20px", border:"none",
+            borderBottom: aba===a.id ? `3px solid ${GOLD}` : "3px solid transparent",
+            background:"none", color: aba===a.id ? GOLD : MUTED,
+            fontWeight: aba===a.id ? 700 : 400,
+            fontSize:13, fontFamily:"monospace",
+          }}>{a.label}</button>
+        ))}
+      </div>
+
+      <div style={{ maxWidth:720, margin:"0 auto", padding:"24px 18px 80px" }}>
+
+        {/* ══ CHECKLIST ══ */}
+        {aba === "tarefas" && (
+          <div>
+            {/* Seletor semana */}
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8, marginBottom:24 }}>
+              {SEMANAS.map(s => {
+                const ts = TAREFAS.filter(t => t.sem === s.sem);
+                const ds = ts.filter(t => checks[TAREFAS.indexOf(t)]).length;
+                const sel = semSel === s.sem;
+                return (
+                  <button key={s.sem} onClick={() => setSemSel(s.sem)} style={{
+                    background: sel ? s.cor : CARD,
+                    border:`1px solid ${sel ? s.cor : BORD}`,
+                    borderRadius:10, padding:"12px 8px", textAlign:"center", transition:"all 0.15s",
+                  }}>
+                    <div style={{ fontSize:12, fontWeight:700, color: sel ? "#FFF" : s.cor, fontFamily:"monospace" }}>{s.sem}</div>
+                    <div style={{ fontSize:11, color: sel ? "rgba(255,255,255,0.8)" : MUTED, marginTop:2 }}>{s.periodo}</div>
+                    <div style={{ fontSize:14, fontWeight:700, color: sel ? "#FFF" : TEXT, marginTop:6 }}>{ds}/{ts.length}</div>
+                    <div style={{ height:3, borderRadius:2, marginTop:6, background: sel ? "rgba(255,255,255,0.2)" : BORD, overflow:"hidden" }}>
+                      <div style={{ height:"100%", background: sel ? "#FFF" : s.cor, width:`${ts.length ? (ds/ts.length)*100 : 0}%`, transition:"width 0.3s" }} />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Foco da semana */}
+            <div style={{ background:CARD, borderLeft:`4px solid ${COR}`, borderRadius:10, padding:"14px 18px", marginBottom:20, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+              <div>
+                <div style={{ fontSize:10, color:COR, letterSpacing:2, fontFamily:"monospace", marginBottom:4 }}>
+                  {semAtual.label.toUpperCase()} · {semAtual.periodo}
+                </div>
+                <div style={{ fontSize:15, fontWeight:700, color:"#FFF" }}>{semAtual.foco}</div>
+              </div>
+              <div style={{ background:COR, color:"#FFF", borderRadius:8, padding:"6px 14px", fontSize:13, fontWeight:700, fontFamily:"monospace", whiteSpace:"nowrap" }}>
+                {doneSem}/{tarefasFiltradas.length}
+              </div>
+            </div>
+
+            {/* Lista */}
+            <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+              {tarefasFiltradas.map(t => {
+                const idx = TAREFAS.indexOf(t);
+                const isDone = checks[idx];
+                return (
+                  <div key={idx} style={{ background: isDone ? "#0A1A0E" : CARD, border:`1px solid ${isDone ? "#16803C" : BORD}`, borderRadius:10, overflow:"hidden", transition:"all 0.2s" }}>
+                    <div onClick={() => toggle(idx)} style={{ display:"flex", gap:14, alignItems:"flex-start", padding:"14px 16px", cursor:"pointer" }}>
+                      <div style={{ width:24, height:24, borderRadius:6, flexShrink:0, marginTop:1, border:`2px solid ${isDone ? "#16803C" : COR}`, background: isDone ? "#16803C" : "transparent", display:"flex", alignItems:"center", justifyContent:"center", transition:"all 0.2s" }}>
+                        {isDone && <span style={{ color:"#FFF", fontSize:14, fontWeight:700 }}>✓</span>}
+                      </div>
+                      <div style={{ flex:1 }}>
+                        <div style={{ display:"flex", gap:6, alignItems:"center", marginBottom:5, flexWrap:"wrap" }}>
+                          <span style={{ fontSize:14 }}>{t.icon}</span>
+                          <span style={{ fontSize:10, fontWeight:700, color: t.pilarcor==="#374151"?"#9CA3AF":"#FFF", background:t.pilarcor, padding:"2px 8px", borderRadius:4, fontFamily:"monospace" }}>{t.pilar}</span>
+                          <span style={{ fontSize:10, color:MUTED, background:"#091020", padding:"2px 8px", borderRadius:4, fontFamily:"monospace" }}>→ {t.responsavel}</span>
+                        </div>
+                        <div style={{ fontSize:15, fontWeight:700, color: isDone ? "#6EE7B7" : "#FFF", textDecoration: isDone ? "line-through" : "none", marginBottom:4 }}>{t.titulo}</div>
+                        <div style={{ fontSize:13, color: isDone ? "#4ADE80" : TEXT, lineHeight:1.5 }}>{t.desc}</div>
+                      </div>
+                    </div>
+                    <div style={{ padding:"8px 16px 12px 54px", borderTop:`1px solid ${isDone ? "#1A4020" : BORD}`, display:"flex", gap:6, alignItems:"flex-start" }}>
+                      <span style={{ fontSize:12, color:GOLD, flexShrink:0, marginTop:1 }}>📎</span>
+                      <span style={{ fontSize:12, color:MUTED }}><span style={{ color:GOLD, fontWeight:700 }}>Entrega: </span>{t.entrega}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ══ VISÃO ══ */}
+        {aba === "visao" && (
+          <div>
+            <div style={{ background:"#0D1B3E", borderRadius:12, padding:24, marginBottom:24, border:`1px solid ${GOLD}40` }}>
+              <div style={{ fontSize:10, color:GOLD, letterSpacing:3, marginBottom:12, fontFamily:"monospace" }}>SEU PROCESSO DE ESTRUTURAÇÃO</div>
+              <div style={{ fontSize:22, fontWeight:700, color:"#FFF", marginBottom:8 }}>{pct}% concluído</div>
+              <div style={{ height:8, background:"#1A3050", borderRadius:4, overflow:"hidden", marginBottom:12 }}>
+                <div style={{ height:"100%", borderRadius:4, width:`${pct}%`, background:`linear-gradient(90deg,${GOLD},#6EE7B7)`, transition:"width 0.4s" }} />
+              </div>
+              <div style={{ fontSize:14, color:MUTED }}>{done} de {total} entregas realizadas nos 30 dias</div>
+            </div>
+
+            {SEMANAS.map(s => {
+              const ts = TAREFAS.filter(t => t.sem === s.sem);
+              const ds = ts.filter(t => checks[TAREFAS.indexOf(t)]).length;
+              const completa = ds === ts.length;
+              const iniciada = ds > 0;
+              return (
+                <div key={s.sem} style={{ background:CARD, border:`1px solid ${completa ? s.cor : iniciada ? s.cor+"60" : BORD}`, borderRadius:12, overflow:"hidden", marginBottom:12 }}>
+                  <div style={{ background: completa ? s.cor : "transparent", padding:"14px 18px", borderBottom:`1px solid ${completa ? s.cor : BORD}`, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                    <div>
+                      <div style={{ fontSize:11, color: completa ? "rgba(255,255,255,0.8)" : s.cor, fontFamily:"monospace", letterSpacing:1, marginBottom:2 }}>{s.label.toUpperCase()} · {s.periodo}</div>
+                      <div style={{ fontSize:15, fontWeight:700, color: completa ? "#FFF" : TEXT }}>{s.foco}</div>
+                    </div>
+                    <div style={{ fontSize:20 }}>{completa ? "✅" : iniciada ? "⏳" : "○"}</div>
+                  </div>
+                  <div style={{ padding:"12px 18px" }}>
+                    {ts.map((t, i) => {
+                      const isDone = checks[TAREFAS.indexOf(t)];
+                      return (
+                        <div key={i} style={{ display:"flex", gap:10, alignItems:"flex-start", padding:"8px 0", borderBottom: i < ts.length-1 ? `1px solid ${BORD}` : "none", opacity: isDone ? 1 : 0.6 }}>
+                          <span style={{ fontSize:14, flexShrink:0, marginTop:1 }}>{isDone ? "✅" : "○"}</span>
+                          <div>
+                            <div style={{ fontSize:13, fontWeight:600, color: isDone ? "#6EE7B7" : TEXT }}>{t.titulo}</div>
+                            <div style={{ fontSize:12, color:MUTED, marginTop:2 }}>{t.entrega}</div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div style={{ padding:"10px 18px", borderTop:`1px solid ${BORD}`, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                    <div style={{ fontSize:12, color:MUTED }}>{ds}/{ts.length} entregas desta semana</div>
+                    <div style={{ fontSize:12, fontWeight:700, color: completa ? "#6EE7B7" : iniciada ? s.cor : MUTED, fontFamily:"monospace" }}>
+                      {completa ? "CONCLUÍDA ✓" : iniciada ? "EM ANDAMENTO" : "AGUARDANDO"}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            <div style={{ background:CARD, border:`1px solid ${BORD}`, borderRadius:12, padding:18, marginTop:8 }}>
+              <div style={{ fontSize:11, color:GOLD, letterSpacing:2, marginBottom:16, fontFamily:"monospace" }}>PILARES DO MÉTODO SENDO ESTRUTURADOS</div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+                {[
+                  { icon:"🟢", label:"N — Núcleo Comercial",     cor:"#16803C" },
+                  { icon:"🔵", label:"O — Otimização de Funil",  cor:"#1D4ED8" },
+                  { icon:"🟠", label:"T — Tráfego Estratégico",  cor:"#D4A017" },
+                  { icon:"🔴", label:"T — Técnica de Fechamento",cor:"#C2410C" },
+                  { icon:"🟣", label:"L — Liderança",            cor:"#7C3AED" },
+                  { icon:"⚫", label:"K — KPI & Controle",       cor:"#374151" },
+                ].map((p, i) => (
+                  <div key={i} style={{ display:"flex", gap:8, alignItems:"center", background:"#091020", borderRadius:8, padding:"10px 12px", border:`1px solid ${p.cor}40` }}>
+                    <span style={{ fontSize:16 }}>{p.icon}</span>
+                    <span style={{ fontSize:12, color:TEXT, lineHeight:1.3 }}>{p.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* FOOTER */}
+      <div style={{ position:"fixed", bottom:0, left:0, right:0, background:"#040D18", borderTop:`1px solid ${BORD}`, padding:"10px 20px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+        <div style={{ fontSize:11, color:MUTED, fontFamily:"monospace" }}>{done}/{total} tarefas · {pct}% concluído</div>
+        <div style={{ fontSize:11, color:GOLD, fontFamily:"monospace" }}>N.O.T.T.L.E.K™</div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
