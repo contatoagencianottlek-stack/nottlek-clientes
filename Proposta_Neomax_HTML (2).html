@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Proposta Comercial · Neomax Engenharia · N.O.T.T.L.E.K™</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #F8F6F1;
+  --white: #FFFFFF;
+  --ink: #0E1218;
+  --ink2: #2D3748;
+  --muted: #718096;
+  --gold: #B8860B;
+  --gold-lt: #D4A017;
+  --gold-bg: #FBF5E0;
+  --dark: #0D1117;
+  --dark2: #161B22;
+  --border: #E2DDD5;
+  --green: #1A7A4A;
+  --green-bg: #F0FAF4;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ── PROGRESS BAR ── */
+#progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+  width: 0%; z-index: 1000; transition: width .1s;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 3px; left: 0; right: 0;
+  background: rgba(248,246,241,.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 99; padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 52px;
+}
+.nav-brand {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; font-weight: 600;
+  color: var(--gold); letter-spacing: 2px;
+}
+.nav-links {
+  display: flex; gap: 24px; list-style: none;
+}
+.nav-links a {
+  font-size: 12px; color: var(--muted); text-decoration: none;
+  font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--ink); }
+
+/* ── HERO ── */
+.hero {
+  background: var(--dark);
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 80px 80px 72px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(184,134,11,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(184,134,11,.06) 0%, transparent 50%);
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: .04;
+  background-image:
+    linear-gradient(var(--gold) 1px, transparent 1px),
+    linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.hero-content { position: relative; z-index: 1; max-width: 700px; }
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--gold); letter-spacing: 4px;
+  margin-bottom: 20px; font-weight: 500;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 6vw, 72px);
+  font-weight: 900; color: #FFF;
+  line-height: 1.05; letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  font-size: 18px; color: #8899AA; line-height: 1.6;
+  margin-bottom: 48px; font-weight: 300;
+}
+.hero-meta {
+  display: flex; gap: 48px; flex-wrap: wrap;
+}
+.hero-meta-item { }
+.hero-meta-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: #556677; letter-spacing: 2px; margin-bottom: 4px;
+}
+.hero-meta-value {
+  font-size: 15px; color: #FFF; font-weight: 500;
+}
+.hero-badge {
+  position: absolute; top: 80px; right: 80px;
+  width: 120px; height: 120px;
+  border: 1px solid rgba(184,134,11,.3);
+  border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+}
+.hero-badge-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; color: var(--gold); letter-spacing: 1px; line-height: 1.6;
+}
+.hero-badge-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px; font-weight: 900; color: var(--gold); line-height: 1;
+}
+
+/* ── SECTIONS ── */
+section { padding: 96px 80px; }
+section:nth-child(even) { background: var(--white); }
+
+.section-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--gold); letter-spacing: 4px;
+  margin-bottom: 12px; font-weight: 600;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 700; color: var(--ink);
+  line-height: 1.15; margin-bottom: 20px;
+}
+.section-lead {
+  font-size: 17px; color: var(--muted); line-height: 1.7;
+  max-width: 640px; margin-bottom: 56px;
+  font-weight: 300;
+}
+.section-header { max-width: 800px; }
+
+/* ── DORES ── */
+.dores-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.dor-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px 28px;
+  display: flex; gap: 16px; align-items: flex-start;
+  transition: border-color .2s, transform .2s;
+}
+.dor-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+.dor-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--gold-bg); border: 1px solid rgba(184,134,11,.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.dor-text { font-size: 14px; color: var(--ink2); line-height: 1.6; font-weight: 400; }
+
+/* ── PILARES ── */
+.pilares-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 0; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.pilar {
+  padding: 28px 20px; border-right: 1px solid var(--border);
+  transition: background .2s; cursor: default; position: relative;
+}
+.pilar:last-child { border-right: none; }
+.pilar:hover { background: var(--gold-bg); }
+.pilar-letter {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px; font-weight: 900; color: var(--gold);
+  line-height: 1; margin-bottom: 12px; display: block;
+}
+.pilar-name {
+  font-size: 11px; font-weight: 700; color: var(--ink);
+  letter-spacing: .5px; margin-bottom: 8px;
+  text-transform: uppercase; font-family: 'IBM Plex Mono', monospace;
+}
+.pilar-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* ── FASES ── */
+.fases { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+.fase {
+  padding: 40px 36px; position: relative;
+  border-right: 1px solid var(--border);
+}
+.fase:last-child { border-right: none; }
+.fase-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 80px; font-weight: 900;
+  color: var(--border); position: absolute;
+  top: 20px; right: 24px; line-height: 1;
+  pointer-events: none;
+}
+.fase-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: var(--gold); letter-spacing: 3px;
+  font-weight: 600; margin-bottom: 8px;
+}
+.fase-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--ink); margin-bottom: 24px;
+}
+.fase-items { list-style: none; }
+.fase-items li {
+  font-size: 13px; color: var(--muted); padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;
+}
+.fase-items li:last-child { border-bottom: none; }
+.fase-items li::before {
+  content: '→';
+  color: var(--gold); font-size: 11px; flex-shrink: 0; margin-top: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.fase.destaque { background: var(--dark); }
+.fase.destaque .fase-num { color: rgba(255,255,255,.05); }
+.fase.destaque .fase-tag { color: var(--gold); }
+.fase.destaque .fase-title { color: #FFF; }
+.fase.destaque .fase-items li { border-color: rgba(255,255,255,.1); color: #8899AA; }
+
+/* ── ENTREGÁVEIS ── */
+.entregaveis-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.entregavel {
+  display: grid; grid-template-columns: 52px 1fr auto;
+  align-items: center; padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+  gap: 20px;
+}
+.entregavel:last-child { border-bottom: none; }
+.entregavel:hover { background: var(--gold-bg); }
+.entregavel-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px; color: var(--gold); font-weight: 600;
+}
+.entregavel-nome { font-size: 14px; color: var(--ink2); font-weight: 400; }
+.entregavel-freq {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--muted); white-space: nowrap;
+  background: var(--bg); padding: 3px 10px; border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+/* ── INVESTIMENTO ── */
+.inv-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.inv-card {
+  background: var(--dark);
+  border-radius: 20px; padding: 48px;
+  position: relative; overflow: hidden;
+}
+.inv-card::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(184,134,11,.15), transparent 70%);
+}
+.inv-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; color: #556677; letter-spacing: 3px; margin-bottom: 16px;
+}
+.inv-valor {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px; font-weight: 900; color: var(--gold);
+  line-height: 1; margin-bottom: 8px;
+}
+.inv-periodo { font-size: 14px; color: #8899AA; margin-bottom: 32px; }
+.inv-total-label { font-size: 12px; color: #556677; margin-bottom: 4px; }
+.inv-total-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 700; color: #FFF;
+}
+.inv-details { display: flex; flex-direction: column; gap: 14px; }
+.inv-item {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 24px;
+}
+.inv-item-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.inv-item-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.inv-aviso {
+  background: var(--gold-bg); border: 1px solid rgba(184,134,11,.3);
+  border-radius: 12px; padding: 20px 24px;
+  font-size: 13px; color: #7A5C00; line-height: 1.6;
+}
+.inv-aviso strong { color: #5A4000; }
+
+/* ── GARANTIA ── */
+.garantia-card {
+  background: var(--dark); border-radius: 24px; padding: 64px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  align-items: center;
+}
+.garantia-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 140px; font-weight: 900; color: var(--gold);
+  line-height: 1; margin-bottom: 0; display: block;
+  opacity: .15; position: absolute;
+}
+.garantia-text-block { position: relative; }
+.garantia-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px; font-weight: 700; color: #FFF;
+  line-height: 1.2; margin-bottom: 20px;
+}
+.garantia-body { font-size: 15px; color: #8899AA; line-height: 1.7; }
+.garantia-items { display: flex; flex-direction: column; gap: 16px; }
+.garantia-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px 24px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+}
+.garantia-item-icon { font-size: 20px; flex-shrink: 0; }
+.garantia-item-text { font-size: 14px; color: #8899AA; line-height: 1.6; }
+.garantia-item-text strong { color: #FFF; display: block; margin-bottom: 2px; }
+
+/* ── PASSOS ── */
+.passos { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; }
+.passo {
+  padding: 40px 32px; border-right: 1px solid var(--border);
+  position: relative;
+}
+.passo:last-child { border-right: none; }
+.passo::after {
+  content: '→';
+  position: absolute; right: -12px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold); font-size: 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  z-index: 2;
+}
+.passo:last-child::after { display: none; }
+.passo-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px; font-weight: 900; color: var(--gold);
+  opacity: .2; line-height: 1; margin-bottom: 16px;
+}
+.passo-title { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.passo-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── ASSINATURA ── */
+.assinatura {
+  background: var(--dark);
+  padding: 96px 80px;
+  text-align: center;
+}
+.ass-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px; font-weight: 700; color: #FFF;
+  margin-bottom: 8px;
+}
+.ass-cargo { font-size: 16px; color: var(--gold); margin-bottom: 4px; }
+.ass-empresa { font-size: 14px; color: #556677; margin-bottom: 48px; }
+.ass-contatos {
+  display: flex; gap: 32px; justify-content: center;
+  flex-wrap: wrap; margin-bottom: 56px;
+}
+.ass-contato {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: #8899AA;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 12px 24px; border-radius: 40px;
+  text-decoration: none; transition: all .2s;
+}
+.ass-contato:hover { border-color: var(--gold); color: var(--gold); }
+.validade {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: #334455; letter-spacing: 2px;
+}
+
+/* ── ANIMATIONS ── */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  section { padding: 64px 24px; }
+  .hero { padding: 80px 24px 56px; }
+  .hero-badge { display: none; }
+  .pilares-grid { grid-template-columns: 1fr 1fr; }
+  .pilar { border-right: none; border-bottom: 1px solid var(--border); }
+  .fases { grid-template-columns: 1fr; }
+  .fase { border-right: none; border-bottom: 1px solid var(--border); }
+  .inv-layout { grid-template-columns: 1fr; }
+  .garantia-card { grid-template-columns: 1fr; gap: 40px; padding: 40px 28px; }
+  .passos { grid-template-columns: 1fr 1fr; }
+  .dores-grid { grid-template-columns: 1fr; }
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <div class="nav-brand">N.O.T.T.L.E.K™</div>
+  <ul class="nav-links">
+    <li><a href="#metodo">Método</a></li>
+    <li><a href="#fases">Fases</a></li>
+    <li><a href="#entregaveis">Entregáveis</a></li>
+    <li><a href="#investimento">Investimento</a></li>
+    <li><a href="#passos">Início</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-badge">
+    <div class="hero-badge-num">3</div>
+    <div class="hero-badge-text">meses<br/>de<br/>contrato</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">PROPOSTA COMERCIAL · MARÇO 2026</div>
+    <h1 class="hero-title">
+      Engenharia de<br/>
+      Vendas para a<br/>
+      <em>Neomax</em>
+    </h1>
+    <p class="hero-sub">Implementação do Método N.O.T.T.L.E.K™ para estruturar e escalar o processo comercial da sua integradora — com previsibilidade, sem depender de indicação.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-label">PREPARADO PARA</div>
+        <div class="hero-meta-value">Jessé · Neomax Engenharia</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-label">INVESTIMENTO</div>
+        <div class="hero-meta-value">R$ 1.500,00 / mês</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-label">VALIDADE</div>
+        <div class="hero-meta-value">7 dias a partir do envio</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTEXTO -->
+<section id="contexto">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">01 · CONTEXTO</div>
+    <h2 class="section-title">O problema que a Neomax precisa resolver</h2>
+    <p class="section-lead">A maioria das integradoras solares em crescimento enfrenta os mesmos gargalos. Reconhecer isso é o primeiro passo para superá-los.</p>
+  </div>
+  <div class="dores-grid reveal">
+    <div class="dor-card">
+      <div class="dor-icon">📢</div>
+      <div class="dor-text"><strong>Dependência de indicação.</strong> O faturamento do mês depende de quem indica — e não de um processo que você controla.</div>
+    </div>
+    <div class="dor-card">
+      <div class="dor-icon">🔍</div>
+      <div class="dor-text"><strong>Sem pré-venda estruturada.</strong> Leads chegam, proposta vai, cliente some. Ninguém sabe onde o processo quebra.</div>
+    </div>
+    <div class="dor-card">
+      <div class="dor-icon">📋</div>
+      <div class="dor-text"><strong>Time sem script nem cadência.</strong> Cada vendedor faz do seu jeito. O resultado é inconsistente e impossível de escalar.</div>
+    </div>
+    <div class="dor-card">
+      <div class="dor-icon">📊</div>
+      <div class="dor-text"><strong>Sem métricas reais.</strong> Você não sabe seu CAC, sua taxa de conversão nem o custo por lead. Sem número, toda decisão é arriscada.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTODO -->
+<section id="metodo">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">02 · O MÉTODO</div>
+    <h2 class="section-title">N.O.T.T.L.E.K™ — os 7 pilares</h2>
+    <p class="section-lead">Cada letra é um sistema independente e interdependente. Quando os 7 pilares operam juntos, a integradora para de depender de indicação e começa a construir receita previsível e escalável.</p>
+  </div>
+  <div class="pilares-grid reveal">
+    <div class="pilar">
+      <span class="pilar-letter">N</span>
+      <div class="pilar-name">Núcleo Comercial</div>
+      <div class="pilar-desc">O cérebro da operação. Metas de faturamento transformadas em ações concretas: ticket médio, taxa de conversão e leads mínimos calculados com precisão.</div>
+    </div>
+    <div class="pilar">
+      <span class="pilar-letter">O</span>
+      <div class="pilar-name">Otimização de Funil</div>
+      <div class="pilar-desc">Estancamos a sangria de oportunidades perdidas. Tempo de resposta reduzido, qualificação de leads, follow-up estruturado e CRM organizado.</div>
+    </div>
+    <div class="pilar">
+      <span class="pilar-letter">T</span>
+      <div class="pilar-name">Tráfego Estratégico</div>
+      <div class="pilar-desc">O combustível do sistema. Campanhas pagas e orgânicas para gerar volume previsível de leads qualificados todo mês.</div>
+    </div>
+    <div class="pilar">
+      <span class="pilar-letter">T</span>
+      <div class="pilar-name">Técnica de Fechamento</div>
+      <div class="pilar-desc">Transformamos reuniões em contratos. Script consultivo, venda baseada em ROI e payback, objeções mapeadas e tratadas.</div>
+    </div>
+    <div class="pilar">
+      <span class="pilar-letter">L</span>
+      <div class="pilar-name">Liderança</div>
+      <div class="pilar-desc">A transição de "eu-empresa" para empresa de verdade. Papéis definidos, delegação eficiente e processos documentados (POPs).</div>
+    </div>
+    <div class="pilar">
+      <span class="pilar-letter">E</span>
+      <div class="pilar-name">Escala</div>
+      <div class="pilar-desc">Crescimento planejado e seguro. Expansão regional, aumento de ticket médio, upsell de O&M e parcerias estratégicas.</div>
+    </div>
+    <div class="pilar">
+      <span class="pilar-letter">K</span>
+      <div class="pilar-name">KPI & Controle</div>
+      <div class="pilar-desc">O painel de controle do avião. CPL, CAC, ROI de campanhas e dashboards de gestão para decisões baseadas em dados, não achismos.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FASES -->
+<section id="fases">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">03 · IMPLEMENTAÇÃO</div>
+    <h2 class="section-title">3 meses, 3 fases, resultados mensuráveis</h2>
+    <p class="section-lead">A implementação é progressiva. Cada fase entrega algo concreto antes da próxima começar.</p>
+  </div>
+  <div class="fases reveal">
+    <div class="fase">
+      <div class="fase-num">01</div>
+      <div class="fase-tag">MÊS 1</div>
+      <div class="fase-title">Diagnóstico & Fundação</div>
+      <ul class="fase-items">
+        <li>Mapeamento completo da operação atual</li>
+        <li>Definição do ICP — perfil do cliente ideal</li>
+        <li>Estruturação do processo comercial</li>
+        <li>Configuração do CRM e ferramentas</li>
+        <li>Criação das primeiras campanhas</li>
+      </ul>
+    </div>
+    <div class="fase destaque">
+      <div class="fase-num">02</div>
+      <div class="fase-tag">MÊS 2</div>
+      <div class="fase-title">Implementação & Testes</div>
+      <ul class="fase-items">
+        <li>Ativação das campanhas de tráfego</li>
+        <li>Treinamento do time de vendas</li>
+        <li>Scripts e cadências de follow-up</li>
+        <li>Primeiros KPIs monitorados</li>
+        <li>Ajustes baseados em dados reais</li>
+      </ul>
+    </div>
+    <div class="fase">
+      <div class="fase-num">03</div>
+      <div class="fase-tag">MÊS 3</div>
+      <div class="fase-title">Otimização & Escala</div>
+      <ul class="fase-items">
+        <li>Otimização de campanhas com dados</li>
+        <li>Consolidação do processo de pré-venda</li>
+        <li>Playbook comercial documentado</li>
+        <li>Revisão geral e plano de continuidade</li>
+        <li>Relatório de resultados do trimestre</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ENTREGÁVEIS -->
+<section id="entregaveis">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">04 · ENTREGÁVEIS</div>
+    <h2 class="section-title">O que está incluído nos R$ 1.500/mês</h2>
+    <p class="section-lead">Todos os entregáveis abaixo representam mão de obra, gestão estratégica e execução da N.O.T.T.L.E.K™.</p>
+  </div>
+  <div class="entregaveis-list reveal">
+    <div class="entregavel"><span class="entregavel-num">01</span><span class="entregavel-nome">Diagnóstico completo da operação comercial atual</span><span class="entregavel-freq">Mês 1</span></div>
+    <div class="entregavel"><span class="entregavel-num">02</span><span class="entregavel-nome">Definição do ICP — Perfil do Cliente Ideal</span><span class="entregavel-freq">Mês 1</span></div>
+    <div class="entregavel"><span class="entregavel-num">03</span><span class="entregavel-nome">Script de prospecção ativa (cold call e WhatsApp)</span><span class="entregavel-freq">Mês 1</span></div>
+    <div class="entregavel"><span class="entregavel-num">04</span><span class="entregavel-nome">Script de pré-venda e qualificação de leads</span><span class="entregavel-freq">Mês 1</span></div>
+    <div class="entregavel"><span class="entregavel-num">05</span><span class="entregavel-nome">Estruturação do funil no CRM</span><span class="entregavel-freq">Mês 1</span></div>
+    <div class="entregavel"><span class="entregavel-num">06</span><span class="entregavel-nome">Criação e ativação das campanhas de tráfego pago</span><span class="entregavel-freq">Mês 2</span></div>
+    <div class="entregavel"><span class="entregavel-num">07</span><span class="entregavel-nome">Cadência de follow-up para leads frios e quentes</span><span class="entregavel-freq">Mês 2</span></div>
+    <div class="entregavel"><span class="entregavel-num">08</span><span class="entregavel-nome">Treinamento do time comercial com o método</span><span class="entregavel-freq">Mês 2</span></div>
+    <div class="entregavel"><span class="entregavel-num">09</span><span class="entregavel-nome">Relatório mensal de KPIs e performance</span><span class="entregavel-freq">Mensal</span></div>
+    <div class="entregavel"><span class="entregavel-num">10</span><span class="entregavel-nome">Reuniões de acompanhamento estratégico</span><span class="entregavel-freq">Quinzenal</span></div>
+    <div class="entregavel"><span class="entregavel-num">11</span><span class="entregavel-nome">Otimização contínua das campanhas com base em dados</span><span class="entregavel-freq">Mês 2 e 3</span></div>
+    <div class="entregavel"><span class="entregavel-num">12</span><span class="entregavel-nome">Playbook comercial documentado da Neomax Engenharia</span><span class="entregavel-freq">Mês 3</span></div>
+    <div class="entregavel"><span class="entregavel-num">13</span><span class="entregavel-nome">Relatório final de resultados do trimestre</span><span class="entregavel-freq">Mês 3</span></div>
+  </div>
+</section>
+
+<!-- INVESTIMENTO -->
+<section id="investimento">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">05 · INVESTIMENTO</div>
+    <h2 class="section-title">Transparência total nos valores</h2>
+    <p class="section-lead">Sem surpresas. Dois números que você precisa conhecer antes de assinar.</p>
+  </div>
+  <div class="inv-layout reveal">
+    <div class="inv-card">
+      <div class="inv-label">MENSALIDADE N.O.T.T.L.E.K™</div>
+      <div class="inv-valor">R$1.500</div>
+      <div class="inv-periodo">por mês · contrato mínimo de 3 meses</div>
+      <div class="inv-total-label">Total do trimestre</div>
+      <div class="inv-total-val">R$ 4.500,00</div>
+    </div>
+    <div class="inv-details">
+      <div class="inv-item">
+        <div class="inv-item-title">O que está incluído</div>
+        <div class="inv-item-desc">Mão de obra, gestão estratégica, execução das entregas, reuniões quinzenais e relatórios mensais.</div>
+      </div>
+      <div class="inv-item">
+        <div class="inv-item-title">Condições de pagamento</div>
+        <div class="inv-item-desc">PIX, transferência ou boleto. Vencimento no 1º dia útil de cada mês. Primeira parcela na assinatura.</div>
+      </div>
+      <div class="inv-aviso">
+        <strong>⚠ Sobre a verba de campanhas:</strong> O valor investido em tráfego pago (Google Ads, Meta Ads) é pago diretamente pelo Jessé à plataforma e <strong>não está incluído</strong> nos R$ 1.500/mês. O valor da verba é definido juntos com base nos objetivos.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<section id="garantia" style="background: var(--bg);">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">06 · GARANTIA</div>
+    <h2 class="section-title">Compromisso com resultado</h2>
+  </div>
+  <div class="garantia-card reveal">
+    <div class="garantia-text-block">
+      <div class="garantia-title">Se não estiver alinhado no 1º mês, encerramos sem multa.</div>
+      <p class="garantia-body">Transparência é parte do método. Se ao final do primeiro mês a execução não estiver no nível prometido nesta proposta, conversamos sobre ajustes ou encerramento. Sem burocracia, sem multa.</p>
+    </div>
+    <div class="garantia-items">
+      <div class="garantia-item">
+        <div class="garantia-item-icon">📊</div>
+        <div class="garantia-item-text">
+          <strong>Métricas definidas juntos</strong>
+          Desde o kickoff, definimos os indicadores que vamos perseguir: leads, reuniões, propostas, fechamentos.
+        </div>
+      </div>
+      <div class="garantia-item">
+        <div class="garantia-item-icon">🔄</div>
+        <div class="garantia-item-text">
+          <strong>Revisão mensal</strong>
+          Números revisados todo mês. O que funciona, escala. O que não funciona, ajusta.
+        </div>
+      </div>
+      <div class="garantia-item">
+        <div class="garantia-item-icon">🤝</div>
+        <div class="garantia-item-text">
+          <strong>Relação de parceria</strong>
+          Não somos fornecedor de serviço. Somos parceiros de operação. O crescimento da Neomax é o nosso resultado.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRÓXIMOS PASSOS -->
+<section id="passos">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">07 · PRÓXIMOS PASSOS</div>
+    <h2 class="section-title">Para começar esta semana</h2>
+    <p class="section-lead">4 ações simples para a Neomax Engenharia iniciar a implementação do método.</p>
+  </div>
+  <div class="passos reveal">
+    <div class="passo">
+      <div class="passo-num">01</div>
+      <div class="passo-title">Aprovação da proposta</div>
+      <div class="passo-desc">Jessé confirma o interesse via WhatsApp ou e-mail.</div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">02</div>
+      <div class="passo-title">Assinatura do contrato</div>
+      <div class="passo-desc">Envio do contrato de prestação de serviços para assinatura digital.</div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">03</div>
+      <div class="passo-title">Primeiro pagamento</div>
+      <div class="passo-desc">Pagamento da primeira mensalidade na assinatura.</div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">04</div>
+      <div class="passo-title">Reunião de Kickoff</div>
+      <div class="passo-desc">Diagnóstico inicial e alinhamento das metas — Semana 1.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSINATURA -->
+<div class="assinatura">
+  <div class="reveal">
+    <div class="ass-nome">Keltton Belizario</div>
+    <div class="ass-cargo">Fundador · N.O.T.T.L.E.K™</div>
+    <div class="ass-empresa">Engenharia de Vendas para Integradoras Solares</div>
+    <div class="ass-contatos">
+      <a href="/cdn-cgi/l/email-protection#98f7f3fdf4ececf7f6fafdf4f1d8f1f6ebecf9ffeaf9f5b6fbf7f5" class="ass-contato">
+        <span>✉</span> okelttonbeli
+      </a>
+      <a href="https://wa.me/5535997339177" class="ass-contato">
+        <span>📱</span> WhatsApp N.O.T.T.L.E.K™
+      </a>
+    </div>
+    <div class="validade">PROPOSTA VÁLIDA POR 7 DIAS · MARÇO 2026 · CONFIDENCIAL</div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Progress bar
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+
+// Reveal on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.targe
