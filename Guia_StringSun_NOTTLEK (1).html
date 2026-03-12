@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Guia Comercial · String Sun · N.O.T.T.L.E.K™</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#f9f8f5;color:#1a1a1a;line-height:1.7;font-size:16px;}
+
+/* NAV */
+nav{background:#0d1117;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+.nav-logo{color:#c9962a;font-size:11px;font-weight:700;letter-spacing:3px;}
+.nav-right{color:#556677;font-size:11px;letter-spacing:1px;}
+
+/* HERO */
+.hero{background:#0d1117;padding:90px 80px 80px;position:relative;overflow:hidden;}
+.hero::after{content:'NOTTLEK';position:absolute;right:-10px;bottom:-20px;font-family:'Playfair Display',serif;font-size:220px;font-weight:900;color:rgba(201,150,42,0.03);line-height:1;pointer-events:none;}
+.hero-pre{display:inline-block;background:rgba(201,150,42,0.12);border:1px solid rgba(201,150,42,0.25);border-radius:4px;color:#c9962a;font-size:11px;font-weight:600;letter-spacing:3px;padding:5px 14px;margin-bottom:24px;}
+.hero-title{font-family:'Playfair Display',serif;font-size:58px;font-weight:900;color:#fff;line-height:1.05;margin-bottom:24px;max-width:700px;}
+.hero-title span{color:#c9962a;}
+.hero-sub{color:#8899aa;font-size:17px;font-weight:300;max-width:600px;line-height:1.75;margin-bottom:48px;}
+.hero-aviso{background:rgba(201,150,42,0.08);border:1px solid rgba(201,150,42,0.2);border-left:4px solid #c9962a;border-radius:8px;padding:20px 24px;max-width:620px;}
+.hero-aviso-text{color:#c9962a;font-size:14px;line-height:1.7;font-weight:400;}
+.hero-aviso-text strong{font-weight:700;}
+
+/* SECTION */
+.s{padding:80px;}
+.s-alt{background:#fff;}
+.s-dark{background:#0d1117;}
+.tag{font-family:'IBM Plex Mono',monospace;color:#c9962a;font-size:10px;font-weight:600;letter-spacing:4px;margin-bottom:12px;}
+.title{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:#0d1117;line-height:1.2;margin-bottom:16px;}
+.title-white{color:#fff;}
+.lead{color:#6b7280;font-size:16px;max-width:620px;margin-bottom:48px;font-weight:300;line-height:1.75;}
+.lead-white{color:#8899aa;}
+.divider{height:1px;background:#e5e0d8;margin:0 80px;}
+
+/* VERDADES */
+.verdades{display:flex;flex-direction:column;gap:0;border:1px solid #e5e0d8;border-radius:16px;overflow:hidden;}
+.verdade{display:flex;gap:0;border-bottom:1px solid #e5e0d8;}
+.verdade:last-child{border-bottom:none;}
+.verdade-num{width:80px;flex-shrink:0;background:#f9f8f5;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:40px;font-weight:900;color:#e5e0d8;border-right:1px solid #e5e0d8;}
+.verdade-body{padding:28px 32px;flex:1;}
+.verdade-titulo{font-size:17px;font-weight:700;color:#0d1117;margin-bottom:8px;}
+.verdade-texto{font-size:14px;color:#6b7280;line-height:1.7;}
+.verdade-destaque{background:#fef9ec;border-left:4px solid #c9962a;}
+.verdade-destaque .verdade-num{background:#fef9ec;}
+.verdade-destaque .verdade-titulo{color:#92400e;}
+.verdade-destaque .verdade-texto{color:#a16207;}
+
+/* PILARES */
+.pilares-wrapper{display:flex;flex-direction:column;gap:0;border:1px solid #e5e0d8;border-radius:16px;overflow:hidden;}
+.pilar-row{display:grid;grid-template-columns:72px 220px 1fr;border-bottom:1px solid #e5e0d8;transition:background .15s;}
+.pilar-row:last-child{border-bottom:none;}
+.pilar-row:hover{background:#fef9ec;}
+.pilar-letra-cell{background:#0d1117;display:flex;align-items:center;justify-content:center;border-right:1px solid #1e2530;}
+.pilar-letra{font-family:'Playfair Display',serif;font-size:40px;font-weight:900;color:#c9962a;line-height:1;}
+.pilar-nome-cell{padding:24px 28px;border-right:1px solid #e5e0d8;display:flex;align-items:center;}
+.pilar-nome{font-size:14px;font-weight:700;color:#0d1117;}
+.pilar-corpo{padding:24px 32px;}
+.pilar-def{font-size:13px;color:#6b7280;margin-bottom:12px;line-height:1.6;}
+.pilar-acoes{display:flex;flex-wrap:wrap;gap:6px;}
+.pilar-acao{background:#f9f8f5;border:1px solid #e5e0d8;border-radius:4px;font-size:11px;color:#374151;padding:3px 10px;font-family:'IBM Plex Mono',monospace;}
+
+/* DIAGNÓSTICO */
+.diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.diag-card{border-radius:14px;padding:28px;border:1px solid;}
+.diag-card.problema{background:#fff5f5;border-color:#fecaca;}
+.diag-card.solucao{background:#f0fdf4;border-color:#bbf7d0;}
+.diag-tag{font-size:10px;font-weight:700;letter-spacing:2px;margin-bottom:12px;font-family:'IBM Plex Mono',monospace;}
+.problema .diag-tag{color:#dc2626;}
+.solucao .diag-tag{color:#16a34a;}
+.diag-titulo{font-size:15px;font-weight:700;margin-bottom:10px;}
+.problema .diag-titulo{color:#991b1b;}
+.solucao .diag-titulo{color:#166534;}
+.diag-items{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.diag-items li{font-size:13px;line-height:1.55;display:flex;gap:8px;align-items:flex-start;}
+.problema .diag-items li{color:#b91c1c;}
+.problema .diag-items li::before{content:'✗';font-weight:700;flex-shrink:0;}
+.solucao .diag-items li{color:#15803d;}
+.solucao .diag-items li::before{content:'✓';font-weight:700;flex-shrink:0;}
+
+/* SEMANA IDEAL */
+.semana{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid #e5e0d8;border-radius:16px;overflow:hidden;}
+.dia{border-right:1px solid #e5e0d8;padding:0;}
+.dia:last-child{border-right:none;}
+.dia-header{background:#0d1117;padding:16px 20px;}
+.dia-nome{font-size:11px;font-weight:700;color:#c9962a;letter-spacing:2px;font-family:'IBM Plex Mono',monospace;margin-bottom:2px;}
+.dia-foco{font-size:12px;color:#8899aa;}
+.dia-body{padding:20px;}
+.dia-bloco{margin-bottom:12px;}
+.dia-bloco:last-child{margin-bottom:0;}
+.dia-hora{font-size:10px;color:#c9962a;font-family:'IBM Plex Mono',monospace;font-weight:600;margin-bottom:3px;}
+.dia-atividade{font-size:12px;color:#374151;line-height:1.5;}
+
+/* METRICAS */
+.metricas{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.metrica{background:#fff;border:1px solid #e5e0d8;border-radius:14px;padding:28px 24px;text-align:center;}
+.metrica-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:#c9962a;line-height:1;margin-bottom:8px;}
+.metrica-nome{font-size:12px;font-weight:700;color:#0d1117;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
+.metrica-desc{font-size:12px;color:#9ca3af;line-height:1.5;}
+
+/* SCRIPT */
+.script-box{background:#0d1117;border-radius:20px;padding:48px;max-width:100%;}
+.script-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:32px;}
+.script-etapa{display:flex;gap:20px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.script-etapa:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.script-num{width:36px;height:36px;border-radius:8px;background:rgba(201,150,42,0.15);border:1px solid rgba(201,150,42,0.3);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#c9962a;flex-shrink:0;margin-top:2px;}
+.script-etapa-body{}
+.script-etapa-tag{font-size:10px;color:#c9962a;font-family:'IBM Plex Mono',monospace;letter-spacing:2px;font-weight:600;margin-bottom:6px;}
+.script-fala{font-size:15px;color:#fff;line-height:1.65;margin-bottom:8px;font-style:italic;}
+.script-nota{font-size:12px;color:#556677;line-height:1.6;}
+
+/* OURO */
+.ouro-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.ouro-card{background:#fff;border:1px solid #e5e0d8;border-radius:14px;padding:28px;}
+.ouro-icon{font-size:28px;margin-bottom:14px;}
+.ouro-titulo{font-size:15px;font-weight:700;color:#0d1117;margin-bottom:10px;}
+.ouro-texto{font-size:13px;color:#6b7280;line-height:1.65;}
+.ouro-dica{background:#fef9ec;border:1px solid rgba(201,150,42,0.25);border-radius:8px;padding:12px 14px;margin-top:14px;font-size:12px;color:#92400e;line-height:1.6;}
+
+/* FECHAMENTO */
+.fechamento{background:#0d1117;padding:80px;text-align:center;}
+.fech-titulo{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;color:#fff;margin-bottom:16px;line-height:1.15;}
+.fech-titulo span{color:#c9962a;}
+.fech-sub{color:#8899aa;font-size:16px;max-width:540px;margin:0 auto 48px;font-weight:300;line-height:1.75;}
+.fech-contatos{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:48px;}
+.fech-btn{background:rgba(201,150,42,0.1);border:1px solid rgba(201,150,42,0.3);border-radius:40px;padding:14px 32px;color:#c9962a;font-size:14px;transition:all .2s;display:inline-block;}
+.fech-btn:hover{background:rgba(201,150,42,0.2);}
+.fech-assinatura{font-size:11px;color:#334455;letter-spacing:2px;font-family:'IBM Plex Mono',monospace;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{padding:60px 24px 60px;}
+  .hero-title{font-size:36px;}
+  .s{padding:56px 24px;}
+  .divider{margin:0 24px;}
+  .diag-grid{grid-template-columns:1fr;}
+  .semana{grid-template-columns:1fr 1fr;}
+  .metricas{grid-template-columns:1fr 1fr;}
+  .ouro-grid{grid-template-columns:1fr;}
+  .pilar-row{grid-template-columns:56px 1fr;}
+  .pilar-nome-cell{border-right:none;}
+  .pilar-corpo{display:none;}
+  nav{padding:14px 20px;}
+  .fechamento{padding:56px 24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">N.O.T.T.L.E.K™</div>
+  <div class="nav-right">Material Educativo · String Sun</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-pre">MATERIAL EXCLUSIVO · STRING SUN</div>
+  <h1 class="hero-title">Bruno, isso aqui é<br/>o que as <span>4 agências</span><br/>não te entregaram.</h1>
+  <p class="hero-sub">Neste material você vai encontrar o diagnóstico real da operação comercial de uma integradora solar, as métricas que importam, o script que funciona e o plano semanal que gera resultado. Sem pitch. Sem venda. Só valor.</p>
+  <div class="hero-aviso">
+    <div class="hero-aviso-text"><strong>Por que estamos entregando isso de graça?</strong> Porque acreditamos que quando você ver o que é possível fazer com processo e método, a conversa sobre trabalhar juntos vai ser natural. Se não for, tudo bem — o conhecimento é seu de qualquer forma.</div>
+  </div>
+</div>
+
+<!-- VERDADES -->
+<div class="s">
+  <div class="tag">01 · DIAGNÓSTICO HONESTO</div>
+  <h2 class="title">Por que as agências anteriores não entregaram</h2>
+  <p class="lead">Não é azar. É um padrão do mercado. Entender o padrão é o primeiro passo pra não cair nele de novo.</p>
+  <div class="verdades">
+    <div class="verdade">
+      <div class="verdade-num">1</div>
+      <div class="verdade-body">
+        <div class="verdade-titulo">Prometeram resultado sem entender sua operação primeiro</div>
+        <div class="verdade-texto">Toda agência chega com um deck bonito e métricas de outros clientes. O problema é que eles aplicam a mesma solução pra todo mundo sem diagnosticar o que está travando especificamente na String Sun. Marketing sem diagnóstico é chute — e chute custa dinheiro.</div>
+      </div>
+    </div>
+    <div class="verdade">
+      <div class="verdade-num">2</div>
+      <div class="verdade-body">
+        <div class="verdade-titulo">Focaram em tráfego antes de consertar o funil</div>
+        <div class="verdade-texto">Lead chegando num funil quebrado não vira venda — vira custo. Se o processo comercial não está estruturado, mais lead só aumenta o trabalho sem aumentar o resultado. A maioria das agências pula esse passo porque tráfego é o que elas sabem vender.</div>
+      </div>
+    </div>
+    <div class="verdade">
+      <div class="verdade-num">3</div>
+      <div class="verdade-body">
+        <div class="verdade-titulo">Não treinaram o time comercial — só entregaram leads</div>
+        <div class="verdade-texto">Lead qualificado na mão de vendedor sem processo é lead perdido. Agência entrega o lead e culpa o time quando não fecha. Time culpa o lead quando não fecha. Ninguém olha pro processo no meio — que é onde o problema está.</div>
+      </div>
+    </div>
+    <div class="verdade">
+      <div class="verdade-num">4</div>
+      <div class="verdade-body">
+        <div class="verdade-titulo">Não mediram nada — ou mediram o que não importa</div>
+        <div class="verdade-texto">Relatório de impressões, alcance e cliques não paga conta. O que importa: custo por lead qualificado, taxa de conversão por etapa do funil e custo de aquisição por cliente fechado. Se a agência não apresentava esses números todo mês, ela não sabia se estava funcionando.</div>
+      </div>
+    </div>
+    <div class="verdade verdade-destaque">
+      <div class="verdade-num">!</div>
+      <div class="verdade-body">
+        <div class="verdade-titulo">A conclusão: o problema não foi o marketing. Foi a ausência de método.</div>
+        <div class="verdade-texto">Marketing sem processo comercial estruturado é como abastecer um carro com o motor quebrado. O problema da String Sun não é falta de lead — é falta de sistema para transformar lead em cliente de forma previsível e repetível.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- MÉTODO -->
+<div class="s s-alt">
+  <div class="tag">02 · O MÉTODO</div>
+  <h2 class="title">Os 7 pilares que uma integradora precisa ter</h2>
+  <p class="lead">O Método N.O.T.T.L.E.K™ foi construído especificamente para integradoras solares. Cada pilar resolve um gargalo real da operação.</p>
+  <div class="pilares-wrapper">
+    <div class="pilar-row">
+      <div class="pilar-letra-cell"><div class="pilar-letra">N</div></div>
+      <div class="pilar-nome-cell"><div class="pilar-nome">Núcleo Comercial</div></div>
+      <div class="pilar-corpo">
+        <div class="pilar-def">O cérebro da operação. Sem clareza matemática do negócio, a empresa opera às cegas. Aqui calculamos: meta mensal → ticket médio → taxa de conversão → leads mínimos necessários. Esse cálculo transforma "quero vender mais" em "preciso de X leads por semana para fechar Y contratos."</div>
+        <div class="pilar-acoes">
+          <span class="pilar-acao">Meta mensal definida</span>
+          <span class="pilar-acao">Ticket médio calculado</span>
+          <span class="pilar-acao">Taxa de conversão medida</span>
+          <span class="pilar-acao">Leads mínimos definidos</span>
+          <span class="pilar-acao">Funil estruturado</span>
+        </div>
+      </div>
+    </div>
+    <div class="pilar-row">
+      <div class="pilar-letra-cell"><div class="pilar-letra">O</div></div>
+      <div class="pilar-nome-cell"><div class="pilar-nome">Otimização de Funil</div></div>
+      <div class="pilar-corpo">
+        <div class="pilar-def">A maioria das integradoras não perde dinheiro por falta de lead — perde por falha no processo. Este pilar estanca a sangria: tempo de resposta reduzido para minutos, script de qualificação (MQL/SQL), cadências de follow-up e CRM organizado para que nenhum lead seja esquecido.</div>
+        <div class="pilar-acoes">
+          <span class="pilar-acao">Resposta em minutos</span>
+          <span class="pilar-acao">Script de qualificação</span>
+          <span class="pilar-acao">Follow-up estruturado</span>
+          <span class="pilar-acao">CRM implementado</span>
+        </div>
+      </div>
+    </div>
+    <div class="pilar-row">
+      <div class="pilar-letra-cell"><div class="pilar-letra">T</div></div>
+      <div class="pilar-nome-cell"><div class="pilar-nome">Tráfego Estratégico</div></div>
+      <div class="pilar-corpo">
+        <div class="pilar-def">O tráfego só entra quando o motor (N e O) está funcionando. Atrair cliente certo com mensagem certa no momento certo. Campanhas de Google Ads e Meta Ads focadas em intenção de compra — não em alcance ou curtidas. Landing pages de alta conversão. Conteúdo que posiciona a String Sun por valor, não por preço.</div>
+        <div class="pilar-acoes">
+          <span class="pilar-acao">Google Ads</span>
+          <span class="pilar-acao">Meta Ads</span>
+          <span class="pilar-acao">Conteúdo orgânico</span>
+          <span class="pilar-acao">Landing pages</span>
+        </div>
+      </div>
+    </div>
+    <div class="pilar-row">
+      <div class="pilar-letra-cell"><div class="pilar-letra">T</div></div>
+      <div class="pilar-nome-cell"><div class="pilar-nome">Técnica de Fechamento</div></div>
+      <div class="pilar-corpo">
+        <div class="pilar-def">Onde o valor vira receita. Transformamos o time de "vendedores" em consultores de investimento solar. Venda baseada em números: payback, ROI, economia futura. Objeções mapeadas e tratadas. Técnicas de fechamento com autoridade — o cliente toma a decisão com confiança, não pressionado.</div>
+        <div class="pilar-acoes">
+          <span class="pilar-acao">Script consultivo</span>
+          <span class="pilar-acao">Venda em ROI e payback</span>
+          <span class="pilar-acao">Manual de objeções</span>
+          <span class="pilar-acao">Fechamento com autoridade</span>
+        </div>
+      </div>
+    </div>
+    <div class="pilar-row">
+      <div class="pilar-letra-cell"><div class="pilar-letra">L</div></div>
+      <div class="pilar-nome-cell"><div class="pilar-nome">Liderança</div></div>
+      <div class="pilar-corpo">
+        <div class="pilar-def">A transição de "eu-empresa" para empresa de verdade. Sem liderança e processos documentados, o dono vira o maior gargalo do próprio crescimento. Papéis e responsabilidades definidos. Delegação eficiente. POPs (Procedimentos Operacionais Padrão) para que a operação não dependa de uma pessoa.</div>
+        <div class="pilar-acoes">
+          <span class="pilar-acao">Papéis definidos</span>
+          <span class="pilar-acao">Delegação estruturada</span>
+          <span class="pilar-acao">POPs documentados</span>
+          <span class="pilar-acao">Mentalidade de dono</span>
+        </div>
+      </div>
+    </div>
+    <div class="pilar-row">
+      <div class="pilar-letra-cell"><div class="pilar-letra">E</div></div>
+      <div class="pilar-nome-cell"><div class="pilar-nome">Escala</div></div>
+      <div class="pilar-corpo">
+        <div class="pilar-def">Crescimento só é seguro quando os outros pilares estão sólidos. Expansão planejada: novos mercados regionais, ticket médio maior com ofertas premium, upsell de O&M (operação e manutenção) e BESS (sistemas de bateria), parcerias com arquitetos e construtoras.</div>
+        <div class="pilar-acoes">
+          <span class="pilar-acao">Expansão regional</span>
+          <span class="pilar-acao">Ticket médio maior</span>
+          <span class="pilar-acao">Upsell O&M e BESS</span>
+          <span class="pilar-acao">Parcerias estratégicas</span>
+        </div>
+      </div>
+    </div>
+    <div class="pilar-row">
+      <div class="pilar-letra-cell"><div class="pilar-letra">K</div></div>
+      <div class="pilar-nome-cell"><div class="pilar-nome">KPI & Controle</div></div>
+      <div class="pilar-corpo">
+        <div class="pilar-def">O painel de controle do avião. Sem número, gestão é achismo — e achismo é fatal pra escala. CPL (custo por lead), CAC (custo por cliente), ROI de campanhas, taxa de conversão por etapa do funil. Dashboard mensal para que Bruno tome decisões baseadas em fatos, não em intuição.</div>
+        <div class="pilar-acoes">
+          <span class="pilar-acao">CPL monitorado</span>
+          <span class="pilar-acao">CAC definido</span>
+          <span class="pilar-acao">ROI de campanhas</span>
+          <span class="pilar-acao">Dashboard de gestão</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DIAGNÓSTICO STRING SUN -->
+<div class="s">
+  <div class="tag">03 · DIAGNÓSTICO PROVÁVEL</div>
+  <h2 class="title">O que provavelmente está travando a String Sun agora</h2>
+  <p class="lead">Baseado no padrão das integradoras que passaram por múltiplas agências sem resultado, esses são os gargalos mais comuns — e como resolvê-los.</p>
+  <div class="diag-grid">
+    <div class="diag-card problema">
+      <div class="diag-tag">O QUE ESTÁ ERRADO</div>
+      <div class="diag-titulo">Operação comercial hoje</div>
+      <ul class="diag-items">
+        <li>Lead chega e demora horas para ser atendido</li>
+        <li>Proposta vai sem qualificação prévia</li>
+        <li>Sem follow-up definido — depende da memória do vendedor</li>
+        <li>Sem script — cada atendimento é diferente</li>
+        <li>Não sabe quantos leads precisa por mês para bater meta</li>
+        <li>Tráfego pago gera clique mas não gera venda</li>
+        <li>Dono centraliza decisões e não consegue escalar</li>
+        <li>Agências entregaram leads mas não estruturaram o processo</li>
+      </ul>
+    </div>
+    <div class="diag-card solucao">
+      <div class="diag-tag">COMO FICA COM O MÉTODO</div>
+      <div class="diag-titulo">Operação comercial estruturada</div>
+      <ul class="diag-items">
+        <li>Lead atendido em menos de 5 minutos — protocolo definido</li>
+        <li>Qualificação antes da proposta — só avança quem tem perfil</li>
+        <li>Cadência de 7 toques automática para cada lead</li>
+        <li>Script consultivo que transforma lead em reunião</li>
+        <li>Meta → ticket médio → conversão → leads necessários calculados</li>
+        <li>Tráfego ativado só depois que o funil está funcionando</li>
+        <li>Processos documentados — operação independe do dono</li>
+        <li>Método completo que integra marketing, vendas e gestão</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- MÉTRICAS -->
+<div class="s s-alt">
+  <div class="tag">04 · NÚMEROS QUE IMPORTAM</div>
+  <h2 class="title">As métricas que toda integradora precisa acompanhar</h2>
+  <p class="lead">Se você não acompanha esses números toda semana, está gerindo no escuro. Veja o que medir e por quê.</p>
+  <div class="metricas">
+    <div class="metrica">
+      <div class="metrica-num">5min</div>
+      <div class="metrica-nome">Tempo máximo de resposta</div>
+      <div class="metrica-desc">Lead que não é atendido em 5 minutos tem 80% mais chance de fechar com o concorrente que atendeu primeiro.</div>
+    </div>
+    <div class="metrica">
+      <div class="metrica-num">5x</div>
+      <div class="metrica-nome">Mínimo de follow-ups</div>
+      <div class="metrica-desc">70% das vendas solares fecham após o 5º contato. 90% dos vendedores desistem no 2º. Aí culpam o lead.</div>
+    </div>
+    <div class="metrica">
+      <div class="metrica-num">CAC</div>
+      <div class="metrica-nome">Custo de Aquisição</div>
+      <div class="metrica-desc">Quanto custa cada cliente fechado? Sem esse número, você não sabe se está ganhando ou perdendo dinheiro em marketing.</div>
+    </div>
+    <div class="metrica">
+      <div class="metrica-num">CPL</div>
+      <div class="metrica-nome">Custo por Lead</div>
+      <div class="metrica-desc">Quanto custou cada lead qualificado? Diferente de clique — lead qualificado é quem tem perfil para comprar.</div>
+    </div>
+    <div class="metrica">
+      <div class="metrica-num">TM</div>
+      <div class="metrica-nome">Ticket Médio</div>
+      <div class="metrica-desc">Valor médio por contrato fechado. Determina quantas vendas você precisa por mês para bater a meta de faturamento.</div>
+    </div>
+    <div class="metrica">
+      <div class="metrica-num">TC%</div>
+      <div class="metrica-nome">Taxa de Conversão</div>
+      <div class="metrica-desc">De 100 leads, quantos viram cliente? Esse número, combinado com o ticket médio, define quantos leads você precisa gerar.</div>
+    </div>
+    <div class="metrica">
+      <div class="metrica-num">LTV</div>
+      <div class="metrica-nome">Valor do Cliente</div>
+      <div class="metrica-desc">Quanto um cliente vale ao longo do tempo com O&M, indicações e upgrades? Muda completamente o cálculo do CAC aceitável.</div>
+    </div>
+    <div class="metrica">
+      <div class="metrica-num">ROI</div>
+      <div class="metrica-nome">Retorno sobre Investimento</div>
+      <div class="metrica-desc">Para cada R$ 1 investido em marketing, quantos reais entraram em receita? O único número que prova se a campanha valeu.</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SCRIPT -->
+<div class="s">
+  <div class="tag">05 · SCRIPT DE OURO</div>
+  <h2 class="title">Como abordar um lead frio e transformar em reunião</h2>
+  <p class="lead">Esse é o script SPIN adaptado para integradora solar. Baseado em 4 perguntas que fazem o cliente sentir que a ideia de comprar foi dele.</p>
+  <div class="script-box">
+    <div class="script-title">Script de Prospecção — Cold Call Solar</div>
+    <div class="script-etapa">
+      <div class="script-num">01</div>
+      <div class="script-etapa-body">
+        <div class="script-etapa-tag">ABERTURA — 20 SEGUNDOS</div>
+        <div class="script-fala">"Boa tarde, [nome]. Sou Bruno, da String Sun Instalação Fotovoltaica. Estou ligando porque a gente trabalha com integradoras da sua região e vi que a sua empresa tem um perfil que combina com o que a gente faz. Tenho 2 minutos do seu tempo?"</div>
+        <div class="script-nota">Não pede desculpa por ligar. Não explica o produto ainda. Faz só uma pergunta: "tenho 2 minutos?"</div>
+      </div>
+    </div>
+    <div class="script-etapa">
+      <div class="script-num">S</div>
+      <div class="script-etapa-body">
+        <div class="script-etapa-tag">SITUAÇÃO — ENTENDA O CONTEXTO</div>
+        <div class="script-fala">"Vocês trabalham mais com residencial, comercial ou industrial? E hoje, como é que chegam os seus clientes — indicação, tráfego pago, prospecção ativa?"</div>
+        <div class="script-nota">Pergunta aberta. Deixa ele falar. Quanto mais ele fala, mais você entende onde está a dor.</div>
+      </div>
+    </div>
+    <div class="script-etapa">
+      <div class="script-num">P</div>
+      <div class="script-etapa-body">
+        <div class="script-etapa-tag">PROBLEMA — ENCONTRE A DOR</div>
+        <div class="script-fala">"E quando você depende muito de indicação, como fica o planejamento do mês? Você consegue prever quanto vai fechar ou é mais variável?"</div>
+        <div class="script-nota">Não fala o problema por ele. Faz a pergunta que faz ele enxergar o problema sozinho. Silêncio depois da pergunta — deixa ele responder.</div>
+      </div>
+    </div>
+    <div class="script-etapa">
+      <div class="script-num">I</div>
+      <div class="script-etapa-body">
+        <div class="script-etapa-tag">IMPLICAÇÃO — AMPLIE A DOR</div>
+        <div class="script-fala">"E essa variação no faturamento, como afeta o planejamento da equipe? Você consegue contratar, investir em equipamento com essa imprevisibilidade?"</div>
+        <div class="script-nota">Aqui o cliente começa a sentir o peso real do problema. Não é só "falta de lead" — é impossibilidade de crescer.</div>
+      </div>
+    </div>
+    <div class="script-etapa">
+      <div class="script-num">N</div>
+      <div class="script-etapa-body">
+        <div class="script-etapa-tag">NECESSIDADE — MOSTRE O OURO</div>
+        <div class="script-fala">"Se você tivesse um processo que gerasse leads qualificados toda semana de forma previsível — sem depender de quem indica — como isso mudaria seu planejamento pro próximo trimestre?"</div>
+        <div class="script-nota">Deixa ele responder. A resposta dele é o argumento de venda. Você não precisou falar nada sobre o seu produto ainda.</div>
+      </div>
+    </div>
+    <div class="script-etapa">
+      <div class="script-num">→</div>
+      <div class="script-etapa-body">
+        <div class="script-etapa-tag">CONVITE — AGENDE A REUNIÃO</div>
+        <div class="script-fala">"Faz sentido a gente marcar 30 minutos essa semana? Não é pra vender nada — é pra eu entender sua operação e te mostrar onde estão os principais gargalos. Se fizer sentido pra você, a gente avança. Se não fizer, sem problema."</div>
+        <div class="script-nota">Tira a pressão. "Não é pra vender nada" desarma a resistência. A reunião vira diagnóstico gratuito — muito mais fácil de aceitar.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SEMANA IDEAL -->
+<div class="s s-alt">
+  <div class="tag">06 · PLANO SEMANAL</div>
+  <h2 class="title">Como deveria ser a semana comercial da String Sun</h2>
+  <p class="lead">Uma semana de vendas estruturada não é sobre trabalhar mais — é sobre trabalhar com sequência e intenção.</p>
+  <div class="semana">
+    <div class="dia">
+      <div class="dia-header">
+        <div class="dia-nome">SEGUNDA</div>
+        <div class="dia-foco">Prospecção</div>
+      </div>
+      <div class="dia-body">
+        <div class="dia-bloco">
+          <div class="dia-hora">08h–12h</div>
+          <div class="dia-atividade">20 ligações de prospecção fria. Script SPIN. Registra na planilha.</div>
+        </div>
+        <div class="dia-bloco">
+          <div class="dia-hora">14h–17h</div>
+          <div class="dia-atividade">Follow-up da semana anterior. Retorna quem não atendeu.</div>
+        </div>
+        <div class="dia-bloco">
+          <div class="dia-hora">17h–18h</div>
+          <div class="dia-atividade">Atualiza CRM. Anota objeções novas para refinar o script.</div>
+        </div>
+      </div>
+    </div>
+    <div class="dia">
+      <div class="dia-header">
+        <div class="dia-nome">TERÇA</div>
+        <div class="dia-foco">Reuniões</div>
+      </div>
+      <div class="dia-body">
+        <div class="dia-bloco">
+          <div class="dia-hora">08h–10h</div>
+          <div class="dia-atividade">Preparação: revisa perfil do lead. Define perguntas-chave para cada reunião.</div>
+        </div>
+        <div class="dia-bloco">
+          <div class="dia-hora">10h–17h</div>
+          <div class="dia-atividade">Reuniões de diagnóstico. Máximo 3 reuniões por dia para manter qualidade.</div>
+        </div>
+        <div class="dia-bloco">
+          <div class="dia-hora">17h–18h</div>
+          <div class="dia-atividade">Follow-up imediato pós-reunião: mensagem citando o que o cliente disse.</div>
+        </div>
+      </div>
+    </div>
+    <div class="dia">
+      <div class="dia-header">
+        <div class="dia-nome">QUARTA</div>
+        <div class="dia-foco">Propostas</div>
+      </div>
+      <div class="dia-body">
+        <div class="dia-bloco">
+          <div class="dia-hora">08h–12h</div>
+          <div class="dia-atividade">Elaboração de propostas com foco em ROI, payback e economia projetada.</div>
+        </div>
+        <div class="dia-bloco">
+          <div class="dia-hora">14h–16h</div>
+          <div class="dia-atividade">Prospecção: mais 10 ligações para manter o topo do funil cheio.</div>
+        </div>
+        <div class="dia-bloco">
+          <div class="dia-hora">16h–17h</div>
+          <div class="dia-atividade">Gestão: revisa métricas da semana. Está no caminho da meta?</div>
+        </div>
+      </div>
+    </div>
+    <div class="dia">
+      <div class="dia-header">
+        <div class="dia-nome">QUINTA</div>
+        <div class="dia-foco">Fechamento</div>
+      </div>
+      <div class="dia-body">
+        <div class="dia-bloco">
+          <div class="dia-hora">08h–12h</div>
+          <div class="dia-atividade">Contato com propostas enviadas. "O que ficou em aberto desde nossa conversa?"</div>
+        </div>
+        <div class="dia-bloco">
+          <div class="dia-hora">14h–16h</div>
+          <div class="dia-atividade">Reuniões de fechamento com os leads mais quentes.</div>
+        </div>
+        <div class="dia-bloco">
+          <div class="dia-hora">16h–18h</div>
+          <div class="dia-atividade">Reativação: liga para os 5 leads mais antigos que nunca responderam.</div>
+        </div>
+      </div>
+    </div>
+    <div class="dia">
+      <div class="dia-header">
+        <div class="dia-nome">SEXTA</div>
+        <div class="dia-foco">Revisão</div>
+      </div>
+      <div class="dia-body">
+        <div class="dia-bloco">
+          <div class="dia-hora">08h–10h</div>
+          <div class="dia-atividade">Última rodada de follow-up da semana. Fecha o número de ligações.</div>
+        </div>
+        <div class="dia-bloco">
+          <div class="dia-hora">10h–12h</div>
+          <div class="dia-atividade">Revisão semanal: quantas ligações, reuniões, propostas, fechamentos?</div>
+        </div>
+        <div class="dia-bloco">
+          <div class="dia-hora">14h–16h</div>
+          <div class="dia-atividade">Planejamento da próxima semana. Define meta e prioridades.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- OURO GRATUITO -->
+<div class="s">
+  <div class="tag">07 · AÇÕES IMEDIATAS</div>
+  <h2 class="title">3 coisas que a String Sun pode fazer essa semana sem gastar nada</h2>
+  <p class="lead">Antes de qualquer campanha, antes de qualquer investimento. Essas 3 ações já geram resultado.</p>
+  <div class="ouro-grid">
+    <div class="ouro-card">
+      <div class="ouro-icon">🔥</div>
+      <div class="ouro-titulo">Reative os leads que você já tem</div>
+      <div class="ouro-texto">Abre o histórico de propostas enviadas nos últimos 90 dias. Escolhe os 10 que mais têm potencial e nunca fecharam. Liga para cada um com a pergunta: "o que ficou em aberto desde a nossa conversa?" Não manda nova proposta — só ouve. Pelo menos 2 desses 10 têm potencial real de fechar essa semana.</div>
+      <div class="ouro-dica">💡 70% das vendas solares fecham após o 5º contato. A maioria das integradoras não passa do 2º. O dinheiro está no seu funil abandonado.</div>
+    </div>
+    <div class="ouro-card">
+      <div class="ouro-icon">⚡</div>
+      <div class="ouro-titulo">Reduza o tempo de resposta para menos de 5 minutos</div>
+      <div class="ouro-texto">Crie uma mensagem padrão no WhatsApp para responder todo lead que chega — seja de formulário, Instagram ou indicação. Algo como: "Boa tarde, [nome]! Sou [vendedor] da String Sun. Vi sua mensagem e já estou disponível para conversar. Qual é a melhor horário pra você hoje?" Isso antes de qualquer outra coisa.</div>
+      <div class="ouro-dica">💡 Lead atendido em 5 minutos tem 80% mais chance de fechar do que lead atendido em 1 hora. Esse único ajuste já muda a taxa de conversão.</div>
+    </div>
+    <div class="ouro-card">
+      <div class="ouro-icon">📊</div>
+      <div class="ouro-titulo">Calcule seus números agora</div>
+      <div class="ouro-texto">Responda 3 perguntas: 1) Qual é sua meta de faturamento mensal? 2) Qual é o ticket médio dos seus contratos? 3) De 10 leads qualificados, quantos você fecha? Com esses 3 números você sabe exatamente quantos leads precisa por semana para bater a meta. Sem esse cálculo, todo esforço comercial é no escuro.</div>
+      <div class="ouro-dica">💡 Fórmula: Meta ÷ Ticket Médio = Vendas necessárias. Vendas necessárias ÷ Taxa de Conversão = Leads mínimos por mês.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FECHAMENTO -->
+<div class="fechamento">
+  <h2 class="fech-titulo">Bruno, o próximo passo<br/>é <span>uma conversa</span>.</h2>
+  <p class="fech-sub">Não uma proposta. Não um contrato. Só uma conversa de 30 minutos para entender onde está o maior gargalo da String Sun hoje e o que faz mais sentido resolver primeiro. Sem compromisso.</p>
+  <div class="fech-contatos">
+    <a href="https://wa.me/5512992251639" class="fech-btn">📱 (12) 99225-1639 — WhatsApp</a>
+    <a href="https://instagram.com/okelttonbeli" class="fech-btn">📸 @okelttonbeli</a>
+  </div>
+  <div class="fech-assinatura">KELTTON BELIZARIO · FUNDADOR N.O.T.T.L.E.K™ · ENGENHARIA DE VENDAS PARA INTEGRADORAS SOLARES</div>
+</div>
+
+</body>
+</html>
