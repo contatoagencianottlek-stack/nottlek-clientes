@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Proposta · Neomax Engenharia · N.O.T.T.L.E.K™</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#f9f8f5;color:#1a1a1a;line-height:1.6;}
+a{text-decoration:none;}
+
+/* NAV */
+nav{background:#0d1117;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+.nav-logo{color:#c9962a;font-size:12px;font-weight:700;letter-spacing:3px;}
+.nav-links{display:flex;gap:28px;}
+.nav-links a{color:#556677;font-size:12px;letter-spacing:1px;transition:color .2s;}
+.nav-links a:hover{color:#c9962a;}
+
+/* HERO */
+.hero{background:#0d1117;padding:100px 80px 80px;position:relative;overflow:hidden;}
+.hero::after{content:'N.O.T.T.L.E.K';position:absolute;right:-20px;top:40px;font-family:'Playfair Display',serif;font-size:180px;font-weight:900;color:rgba(201,150,42,0.04);line-height:1;pointer-events:none;white-space:nowrap;}
+.hero-tag{color:#c9962a;font-size:11px;font-weight:600;letter-spacing:4px;margin-bottom:20px;}
+.hero-title{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;color:#fff;line-height:1.05;margin-bottom:24px;}
+.hero-title span{color:#c9962a;}
+.hero-sub{color:#8899aa;font-size:17px;font-weight:300;max-width:580px;margin-bottom:60px;line-height:1.7;}
+.hero-meta{display:flex;gap:0;border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;max-width:640px;}
+.hero-meta-item{flex:1;padding:20px 24px;border-right:1px solid rgba(255,255,255,0.08);}
+.hero-meta-item:last-child{border-right:none;}
+.hero-meta-label{color:#556677;font-size:10px;letter-spacing:2px;font-weight:600;margin-bottom:6px;}
+.hero-meta-value{color:#fff;font-size:14px;font-weight:500;}
+
+/* SECTIONS */
+.section{padding:80px;}
+.section-alt{background:#fff;}
+.section-tag{color:#c9962a;font-size:10px;font-weight:700;letter-spacing:4px;margin-bottom:12px;}
+.section-title{font-family:'Playfair Display',serif;font-size:38px;font-weight:700;color:#0d1117;margin-bottom:16px;line-height:1.2;}
+.section-desc{color:#6b7280;font-size:16px;max-width:600px;margin-bottom:48px;font-weight:300;line-height:1.7;}
+
+/* DORES */
+.dores{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.dor{background:#f9f8f5;border:1px solid #e5e0d8;border-radius:12px;padding:24px;display:flex;gap:16px;align-items:flex-start;}
+.dor-icon{width:44px;height:44px;background:#fef9ec;border:1px solid rgba(201,150,42,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.dor-title{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:4px;}
+.dor-text{font-size:13px;color:#6b7280;line-height:1.6;}
+
+/* PILARES */
+.pilares{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid #e5e0d8;border-radius:16px;overflow:hidden;}
+.pilar{padding:28px 18px;border-right:1px solid #e5e0d8;transition:background .2s;}
+.pilar:last-child{border-right:none;}
+.pilar:hover{background:#fef9ec;}
+.pilar-letra{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:#c9962a;line-height:1;margin-bottom:12px;}
+.pilar-nome{font-size:11px;font-weight:700;color:#1a1a1a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.pilar-desc{font-size:11px;color:#9ca3af;line-height:1.55;}
+
+/* FASES */
+.fases{display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid #e5e0d8;border-radius:16px;overflow:hidden;}
+.fase{padding:40px 32px;border-right:1px solid #e5e0d8;}
+.fase:last-child{border-right:none;}
+.fase-dark{background:#0d1117;}
+.fase-num{font-size:11px;font-weight:700;letter-spacing:3px;color:#c9962a;margin-bottom:8px;}
+.fase-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#1a1a1a;margin-bottom:24px;}
+.fase-dark .fase-title{color:#fff;}
+.fase-items{list-style:none;}
+.fase-items li{font-size:13px;color:#6b7280;padding:7px 0;border-bottom:1px solid #f0ece6;display:flex;gap:10px;line-height:1.5;}
+.fase-dark .fase-items li{border-color:rgba(255,255,255,0.08);color:#8899aa;}
+.fase-items li:last-child{border-bottom:none;}
+.fase-items li::before{content:'→';color:#c9962a;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+/* ENTREGÁVEIS */
+.entregaveis{border:1px solid #e5e0d8;border-radius:16px;overflow:hidden;}
+.entregavel{display:grid;grid-template-columns:56px 1fr 140px;align-items:center;padding:16px 24px;border-bottom:1px solid #e5e0d8;transition:background .15s;}
+.entregavel:last-child{border-bottom:none;}
+.entregavel:hover{background:#fef9ec;}
+.entregavel-num{font-size:13px;font-weight:700;color:#c9962a;}
+.entregavel-nome{font-size:14px;color:#374151;}
+.entregavel-freq{font-size:11px;color:#9ca3af;text-align:right;font-weight:500;}
+
+/* INVESTIMENTO */
+.inv-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.inv-principal{background:#0d1117;border-radius:20px;padding:48px;position:relative;overflow:hidden;}
+.inv-principal::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(201,150,42,0.12),transparent 70%);}
+.inv-tag{color:#556677;font-size:10px;letter-spacing:3px;font-weight:600;margin-bottom:16px;}
+.inv-valor{font-family:'Playfair Display',serif;font-size:60px;font-weight:900;color:#c9962a;line-height:1;margin-bottom:6px;}
+.inv-periodo{color:#8899aa;font-size:14px;margin-bottom:32px;}
+.inv-total-tag{color:#556677;font-size:11px;margin-bottom:4px;}
+.inv-total{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:#fff;}
+.inv-side{display:flex;flex-direction:column;gap:16px;}
+.inv-card{background:#fff;border:1px solid #e5e0d8;border-radius:14px;padding:24px;}
+.inv-card-title{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:6px;}
+.inv-card-desc{font-size:13px;color:#6b7280;line-height:1.6;}
+.inv-aviso{background:#fef9ec;border:1px solid rgba(201,150,42,0.3);border-left:4px solid #c9962a;border-radius:12px;padding:20px 24px;font-size:13px;color:#92400e;line-height:1.7;}
+
+/* GARANTIA */
+.garantia-box{background:#0d1117;border-radius:20px;padding:60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+.garantia-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:#fff;margin-bottom:16px;line-height:1.25;}
+.garantia-text{color:#8899aa;font-size:15px;line-height:1.7;font-weight:300;}
+.garantia-items{display:flex;flex-direction:column;gap:14px;}
+.garantia-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px 24px;display:flex;gap:14px;align-items:flex-start;}
+.garantia-item-icon{font-size:22px;flex-shrink:0;}
+.garantia-item-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;}
+.garantia-item-desc{font-size:12px;color:#8899aa;line-height:1.6;}
+
+/* PASSOS */
+.passos{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid #e5e0d8;border-radius:16px;overflow:hidden;}
+.passo{padding:40px 28px;border-right:1px solid #e5e0d8;position:relative;}
+.passo:last-child{border-right:none;}
+.passo-num{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;color:#e5e0d8;line-height:1;margin-bottom:16px;}
+.passo-title{font-size:15px;font-weight:600;color:#1a1a1a;margin-bottom:8px;}
+.passo-desc{font-size:13px;color:#6b7280;line-height:1.6;}
+.passo-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:#c9962a;font-size:18px;z-index:2;}
+
+/* FOOTER */
+footer{background:#0d1117;padding:80px;text-align:center;}
+.footer-nome{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;color:#fff;margin-bottom:6px;}
+.footer-cargo{color:#c9962a;font-size:15px;margin-bottom:4px;}
+.footer-empresa{color:#556677;font-size:13px;margin-bottom:40px;}
+.footer-contatos{display:flex;justify-content:center;gap:16px;margin-bottom:48px;flex-wrap:wrap;}
+.footer-contato{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:40px;padding:12px 28px;color:#8899aa;font-size:13px;transition:all .2s;display:inline-block;}
+.footer-contato:hover{border-color:#c9962a;color:#c9962a;}
+.footer-val{color:#334455;font-size:11px;letter-spacing:2px;}
+
+/* DIVIDER */
+.divider{height:1px;background:#e5e0d8;margin:0 80px;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero{padding:60px 24px 60px;}
+  .hero-title{font-size:38px;}
+  .hero-meta{flex-direction:column;}
+  .hero-meta-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .section{padding:56px 24px;}
+  .dores{grid-template-columns:1fr;}
+  .pilares{grid-template-columns:1fr 1fr;}
+  .pilar{border-right:none;border-bottom:1px solid #e5e0d8;}
+  .fases{grid-template-columns:1fr;}
+  .fase{border-right:none;border-bottom:1px solid #e5e0d8;}
+  .fase-dark{border-color:rgba(255,255,255,0.08);}
+  .inv-grid{grid-template-columns:1fr;}
+  .garantia-box{grid-template-columns:1fr;padding:36px 28px;gap:36px;}
+  .passos{grid-template-columns:1fr 1fr;}
+  .passo-arrow{display:none;}
+  footer{padding:56px 24px;}
+  .footer-contatos{flex-direction:column;align-items:center;}
+  nav{padding:14px 20px;}
+  .nav-links{display:none;}
+  .divider{margin:0 24px;}
+  .entregavel{grid-template-columns:44px 1fr;}
+  .entregavel-freq{display:none;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">N.O.T.T.L.E.K™</div>
+  <div class="nav-links">
+    <a href="#metodo">Método</a>
+    <a href="#fases">Fases</a>
+    <a href="#entregaveis">Entregáveis</a>
+    <a href="#investimento">Investimento</a>
+    <a href="#inicio">Início</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">PROPOSTA COMERCIAL · MARÇO 2026</div>
+  <h1 class="hero-title">Engenharia de Vendas<br/>para a <span>Neomax</span></h1>
+  <p class="hero-sub">Implementação do Método N.O.T.T.L.E.K™ para estruturar e escalar o processo comercial da sua integradora — com previsibilidade, sem depender de indicação.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">PREPARADO PARA</div>
+      <div class="hero-meta-value">Jessé · Neomax Engenharia</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">INVESTIMENTO</div>
+      <div class="hero-meta-value">R$ 1.500,00 / mês</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">CONTRATO</div>
+      <div class="hero-meta-value">3 meses mínimo</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">VALIDADE</div>
+      <div class="hero-meta-value">7 dias</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTEXTO -->
+<div class="section">
+  <div class="section-tag">01 · CONTEXTO</div>
+  <h2 class="section-title">O problema que a Neomax precisa resolver</h2>
+  <p class="section-desc">A maioria das integradoras em crescimento enfrenta os mesmos gargalos. Reconhecer isso é o primeiro passo para superá-los.</p>
+  <div class="dores">
+    <div class="dor">
+      <div class="dor-icon">📢</div>
+      <div>
+        <div class="dor-title">Dependência de indicação</div>
+        <div class="dor-text">O faturamento do mês depende de quem indica — não de um processo que você controla.</div>
+      </div>
+    </div>
+    <div class="dor">
+      <div class="dor-icon">🔍</div>
+      <div>
+        <div class="dor-title">Sem pré-venda estruturada</div>
+        <div class="dor-text">Leads chegam, proposta vai, cliente some. Ninguém sabe onde o processo quebra.</div>
+      </div>
+    </div>
+    <div class="dor">
+      <div class="dor-icon">📋</div>
+      <div>
+        <div class="dor-title">Time sem script nem cadência</div>
+        <div class="dor-text">Cada vendedor faz do seu jeito. O resultado é inconsistente e impossível de escalar.</div>
+      </div>
+    </div>
+    <div class="dor">
+      <div class="dor-icon">📊</div>
+      <div>
+        <div class="dor-title">Sem métricas reais</div>
+        <div class="dor-text">Sem CAC, conversão ou custo por lead definidos, toda decisão é um chute.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- MÉTODO -->
+<div class="section section-alt" id="metodo">
+  <div class="section-tag">02 · O MÉTODO</div>
+  <h2 class="section-title">N.O.T.T.L.E.K™ — os 7 pilares</h2>
+  <p class="section-desc">Cada letra é um sistema. Quando os 7 operam juntos, a integradora para de reagir ao mercado e começa a construir receita previsível.</p>
+  <div class="pilares">
+    <div class="pilar">
+      <div class="pilar-letra">N</div>
+      <div class="pilar-nome">Núcleo Comercial</div>
+      <div class="pilar-desc">O cérebro da operação. Metas transformadas em ações: ticket médio, conversão e leads mínimos calculados com precisão.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-letra">O</div>
+      <div class="pilar-nome">Otimização de Funil</div>
+      <div class="pilar-desc">Estancamos a sangria de oportunidades. Tempo de resposta, qualificação de leads, follow-up e CRM organizados.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-letra">T</div>
+      <div class="pilar-nome">Tráfego Estratégico</div>
+      <div class="pilar-desc">O combustível do sistema. Campanhas pagas e orgânicas para gerar leads qualificados todo mês.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-letra">T</div>
+      <div class="pilar-nome">Técnica de Fechamento</div>
+      <div class="pilar-desc">Reuniões viram contratos. Script consultivo, venda em ROI e payback, objeções mapeadas e tratadas.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-letra">L</div>
+      <div class="pilar-nome">Liderança</div>
+      <div class="pilar-desc">De "eu-empresa" para empresa de verdade. Papéis definidos, delegação eficiente, processos documentados.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-letra">E</div>
+      <div class="pilar-nome">Escala</div>
+      <div class="pilar-desc">Crescimento planejado. Expansão regional, ticket maior, upsell de O&M e parcerias estratégicas.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-letra">K</div>
+      <div class="pilar-nome">KPI & Controle</div>
+      <div class="pilar-desc">O painel do avião. CPL, CAC, ROI e dashboards para decisões baseadas em dados, não achismos.</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FASES -->
+<div class="section" id="fases">
+  <div class="section-tag">03 · IMPLEMENTAÇÃO</div>
+  <h2 class="section-title">3 meses, 3 fases, resultados mensuráveis</h2>
+  <p class="section-desc">A implementação é progressiva. Cada fase entrega algo concreto antes da próxima começar.</p>
+  <div class="fases">
+    <div class="fase">
+      <div class="fase-num">MÊS 1</div>
+      <div class="fase-title">Diagnóstico & Fundação</div>
+      <ul class="fase-items">
+        <li>Mapeamento completo da operação atual</li>
+        <li>Definição do ICP — perfil do cliente ideal</li>
+        <li>Estruturação do processo comercial</li>
+        <li>Configuração do CRM e ferramentas</li>
+        <li>Criação das primeiras campanhas</li>
+      </ul>
+    </div>
+    <div class="fase fase-dark">
+      <div class="fase-num">MÊS 2</div>
+      <div class="fase-title">Implementação & Testes</div>
+      <ul class="fase-items">
+        <li>Ativação das campanhas de tráfego</li>
+        <li>Treinamento do time de vendas</li>
+        <li>Scripts e cadências de follow-up</li>
+        <li>Primeiros KPIs monitorados</li>
+        <li>Ajustes baseados em dados reais</li>
+      </ul>
+    </div>
+    <div class="fase">
+      <div class="fase-num">MÊS 3</div>
+      <div class="fase-title">Otimização & Escala</div>
+      <ul class="fase-items">
+        <li>Otimização de campanhas com dados</li>
+        <li>Consolidação do processo de pré-venda</li>
+        <li>Playbook comercial documentado</li>
+        <li>Revisão geral e plano de continuidade</li>
+        <li>Relatório de resultados do trimestre</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ENTREGÁVEIS -->
+<div class="section section-alt" id="entregaveis">
+  <div class="section-tag">04 · ENTREGÁVEIS</div>
+  <h2 class="section-title">O que está incluído nos R$ 1.500/mês</h2>
+  <p class="section-desc">Todos os itens abaixo representam mão de obra, gestão estratégica e execução da N.O.T.T.L.E.K™.</p>
+  <div class="entregaveis">
+    <div class="entregavel"><span class="entregavel-num">01</span><span class="entregavel-nome">Diagnóstico completo da operação comercial atual</span><span class="entregavel-freq">Mês 1</span></div>
+    <div class="entregavel"><span class="entregavel-num">02</span><span class="entregavel-nome">Definição do ICP — Perfil do Cliente Ideal</span><span class="entregavel-freq">Mês 1</span></div>
+    <div class="entregavel"><span class="entregavel-num">03</span><span class="entregavel-nome">Script de prospecção ativa (cold call e WhatsApp)</span><span class="entregavel-freq">Mês 1</span></div>
+    <div class="entregavel"><span class="entregavel-num">04</span><span class="entregavel-nome">Script de pré-venda e qualificação de leads</span><span class="entregavel-freq">Mês 1</span></div>
+    <div class="entregavel"><span class="entregavel-num">05</span><span class="entregavel-nome">Estruturação do funil no CRM</span><span class="entregavel-freq">Mês 1</span></div>
+    <div class="entregavel"><span class="entregavel-num">06</span><span class="entregavel-nome">Criação e ativação das campanhas de tráfego pago</span><span class="entregavel-freq">Mês 2</span></div>
+    <div class="entregavel"><span class="entregavel-num">07</span><span class="entregavel-nome">Cadência de follow-up para leads frios e quentes</span><span class="entregavel-freq">Mês 2</span></div>
+    <div class="entregavel"><span class="entregavel-num">08</span><span class="entregavel-nome">Treinamento do time comercial com o método</span><span class="entregavel-freq">Mês 2</span></div>
+    <div class="entregavel"><span class="entregavel-num">09</span><span class="entregavel-nome">Relatório mensal de KPIs e performance</span><span class="entregavel-freq">Mensal</span></div>
+    <div class="entregavel"><span class="entregavel-num">10</span><span class="entregavel-nome">Reuniões de acompanhamento estratégico</span><span class="entregavel-freq">Quinzenal</span></div>
+    <div class="entregavel"><span class="entregavel-num">11</span><span class="entregavel-nome">Otimização contínua das campanhas com base em dados</span><span class="entregavel-freq">Mês 2 e 3</span></div>
+    <div class="entregavel"><span class="entregavel-num">12</span><span class="entregavel-nome">Playbook comercial documentado da Neomax Engenharia</span><span class="entregavel-freq">Mês 3</span></div>
+    <div class="entregavel"><span class="entregavel-num">13</span><span class="entregavel-nome">Relatório final de resultados do trimestre</span><span class="entregavel-freq">Mês 3</span></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- INVESTIMENTO -->
+<div class="section" id="investimento">
+  <div class="section-tag">05 · INVESTIMENTO</div>
+  <h2 class="section-title">Transparência total nos valores</h2>
+  <p class="section-desc">Dois números que você precisa conhecer antes de assinar. Sem surpresas.</p>
+  <div class="inv-grid">
+    <div class="inv-principal">
+      <div class="inv-tag">MENSALIDADE N.O.T.T.L.E.K™</div>
+      <div class="inv-valor">R$1.500</div>
+      <div class="inv-periodo">por mês · contrato mínimo de 3 meses</div>
+      <div class="inv-total-tag">Total do trimestre</div>
+      <div class="inv-total">R$ 4.500,00</div>
+    </div>
+    <div class="inv-side">
+      <div class="inv-card">
+        <div class="inv-card-title">O que está incluído</div>
+        <div class="inv-card-desc">Mão de obra, gestão estratégica, execução das entregas, reuniões quinzenais e relatórios mensais da N.O.T.T.L.E.K™.</div>
+      </div>
+      <div class="inv-card">
+        <div class="inv-card-title">Condições de pagamento</div>
+        <div class="inv-card-desc">PIX, transferência ou boleto. Vencimento no 1º dia útil de cada mês. Primeira parcela na assinatura do contrato.</div>
+      </div>
+      <div class="inv-aviso">
+        <strong>⚠ Verba de campanhas:</strong> O valor de tráfego pago (Google Ads, Meta Ads) é pago diretamente à plataforma pelo Jessé e <strong>não está incluído</strong> nos R$ 1.500/mês. O valor é definido juntos com base nos objetivos da Neomax.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- GARANTIA -->
+<div class="section section-alt">
+  <div class="section-tag">06 · GARANTIA</div>
+  <h2 class="section-title">Compromisso com resultado</h2>
+  <div class="garantia-box">
+    <div>
+      <div class="garantia-title">Se não estiver alinhado no 1º mês, encerramos sem multa.</div>
+      <p class="garantia-text">Transparência é parte do método. Se ao final do primeiro mês a execução não estiver no nível prometido nesta proposta, conversamos sobre ajustes ou encerramento — sem burocracia, sem multa.</p>
+    </div>
+    <div class="garantia-items">
+      <div class="garantia-item">
+        <div class="garantia-item-icon">📊</div>
+        <div>
+          <div class="garantia-item-title">Métricas definidas juntos</div>
+          <div class="garantia-item-desc">Desde o kickoff, definimos os indicadores: leads, reuniões, propostas, fechamentos. Revisados todo mês.</div>
+        </div>
+      </div>
+      <div class="garantia-item">
+        <div class="garantia-item-icon">🔄</div>
+        <div>
+          <div class="garantia-item-title">Revisão mensal</div>
+          <div class="garantia-item-desc">O que funciona, escala. O que não funciona, ajusta. Sem enrolar.</div>
+        </div>
+      </div>
+      <div class="garantia-item">
+        <div class="garantia-item-icon">🤝</div>
+        <div>
+          <div class="garantia-item-title">Relação de parceria</div>
+          <div class="garantia-item-desc">O crescimento da Neomax é o nosso resultado. Não somos fornecedor — somos parceiros de operação.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PRÓXIMOS PASSOS -->
+<div class="section" id="inicio">
+  <div class="section-tag">07 · PRÓXIMOS PASSOS</div>
+  <h2 class="section-title">Para começar esta semana</h2>
+  <p class="section-desc">4 ações para iniciar a implementação do método na Neomax Engenharia.</p>
+  <div class="passos">
+    <div class="passo">
+      <div class="passo-num">01</div>
+      <div class="passo-title">Aprovação da proposta</div>
+      <div class="passo-desc">Jessé confirma o interesse via WhatsApp ou e-mail.</div>
+      <div class="passo-arrow">→</div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">02</div>
+      <div class="passo-title">Assinatura do contrato</div>
+      <div class="passo-desc">Envio do contrato de prestação de serviços para assinatura digital.</div>
+      <div class="passo-arrow">→</div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">03</div>
+      <div class="passo-title">Primeiro pagamento</div>
+      <div class="passo-desc">Pagamento da primeira mensalidade na assinatura do contrato.</div>
+      <div class="passo-arrow">→</div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">04</div>
+      <div class="passo-title">Reunião de Kickoff</div>
+      <div class="passo-desc">Diagnóstico inicial e alinhamento das metas — Semana 1.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-nome">Keltton Belizario</div>
+  <div class="footer-cargo">Fundador · N.O.T.T.L.E.K™</div>
+  <div class="footer-empresa">Engenharia de Vendas para Integradoras Solares</div>
+  <div class="footer-contatos">
+    <a href="mailto:engenharianeomax@gmail.com" class="footer-contato">✉ engenharianeomax@gmail.com</a>
+    <a href="https://wa.me/5512992378085" class="footer-contato">📱 +55 12 99237-8085</a>
+    <a href="https://instagram.com/okelttonbeli" class="footer-contato">📸 @okelttonbeli</a>
+  </div>
+  <div class="footer-val">PROPOSTA VÁLIDA POR 7 DIAS · MARÇO 2026 · CONFIDENCIAL</div>
+</footer>
+
+</body>
+</html>
