@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Previsibilidade — N.O.T.T.L.E.K™</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0A0C0F;
+    --surface: #111318;
+    --surface2: #181C23;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --orange: #F97316;
+    --orange-dim: rgba(249,115,22,0.15);
+    --orange-glow: rgba(249,115,22,0.08);
+    --text: #F0EDE8;
+    --text-muted: #6B7280;
+    --text-dim: #9CA3AF;
+    --green: #22C55E;
+    --green-dim: rgba(34,197,94,0.12);
+    --blue: #3B82F6;
+    --blue-dim: rgba(59,130,246,0.12);
+    --yellow: #EAB308;
+    --yellow-dim: rgba(234,179,8,0.12);
+    --red: #EF4444;
+    --red-dim: rgba(239,68,68,0.12);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(249,115,22,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(249,115,22,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 52px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange-dim);
+    border: 1px solid rgba(249,115,22,0.3);
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 20px;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--orange);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 46px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  h1 span { color: var(--orange); }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--text-dim);
+    font-weight: 300;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── SECTIONS ── */
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── INPUTS GRID ── */
+  .inputs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 580px) {
+    .inputs-grid { grid-template-columns: 1fr; }
+  }
+
+  .input-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    transition: border-color 0.2s;
+  }
+
+  .input-card:hover { border-color: var(--border2); }
+  .input-card.full { grid-column: 1 / -1; }
+
+  .input-card label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .input-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+    min-height: 36px;
+  }
+
+  .input-value span { color: var(--orange); }
+
+  /* Slider custom */
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--border2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    background: var(--orange);
+    border-radius: 50%;
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--orange);
+    transition: transform 0.15s;
+  }
+
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  .input-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 32px 0;
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── RESULTS ── */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 580px) {
+    .results-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .result-card:hover { border-color: var(--border2); transform: translateY(-1px); }
+
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent, var(--orange));
+    border-radius: 14px 14px 0 0;
+  }
+
+  .result-card.green { --accent: var(--green); }
+  .result-card.blue  { --accent: var(--blue); }
+
+  .result-label {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .result-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .result-card.green .result-value { color: var(--green); }
+  .result-card.blue  .result-value { color: var(--blue); }
+  .result-card       .result-value { color: var(--orange); }
+
+  .result-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    font-family: 'DM Sans', monospace;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .formula-box strong { color: var(--text); font-weight: 500; }
+  .formula-box .highlight { color: var(--orange); font-weight: 600; font-family: 'Syne', sans-serif; font-size: 16px; }
+
+  /* ── INSIGHT ── */
+  .insight {
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 13px;
+    line-height: 1.65;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .insight-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .insight.ok   { background: var(--green-dim); border: 1px solid rgba(34,197,94,0.2); color: #86efac; }
+  .insight.warn { background: var(--yellow-dim); border: 1px solid rgba(234,179,8,0.2); color: #fde68a; }
+  .insight.info { background: var(--blue-dim);   border: 1px solid rgba(59,130,246,0.2); color: #93c5fd; }
+
+  /* ── WEEKS ── */
+  .weeks-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 480px) {
+    .weeks-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .week-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .week-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+  .week-value { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--orange); }
+  .week-sub   { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ── PRATICAL ── */
+  .pratica-list { display: grid; gap: 8px; }
+
+  .pratica-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .pratica-item .icon {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .pratica-item .icon.g { background: var(--green-dim); color: var(--green); }
+  .pratica-item .icon.b { background: var(--blue-dim); color: var(--blue); }
+  .pratica-item .icon.y { background: var(--yellow-dim); color: var(--yellow); }
+
+  .pratica-item strong { color: var(--text); font-weight: 500; }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-brand {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .footer-brand span { color: var(--orange); }
+
+  .footer-note {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* ── ANIMATE ── */
+  .result-value { transition: color 0.3s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .wrap > * { animation: fadeUp 0.5s ease both; }
+  .wrap > *:nth-child(1) { animation-delay: 0.05s; }
+  .wrap > *:nth-child(2) { animation-delay: 0.1s; }
+  .wrap > *:nth-child(3) { animation-delay: 0.15s; }
+  .wrap > *:nth-child(4) { animation-delay: 0.2s; }
+  .wrap > *:nth-child(5) { animation-delay: 0.25s; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge">N.O.T.T.L.E.K™ — Núcleo Comercial</div>
+    <h1>Calculadora de<br><span>Previsibilidade</span></h1>
+    <p class="subtitle">Descubra exatamente quantos leads você precisa para bater sua meta de faturamento.</p>
+  </div>
+
+  <!-- INPUTS -->
+  <div class="section-label">Dados da operação</div>
+
+  <div class="inputs-grid">
+
+    <div class="input-card">
+      <label>Meta de faturamento</label>
+      <div class="input-value" id="meta-display">R$ <span>30.000</span></div>
+      <input type="range" id="meta" min="10000" max="200000" step="5000" value="30000" oninput="calc()">
+      <div class="input-hint">R$ 10k → R$ 200k</div>
+    </div>
+
+    <div class="input-card">
+      <label>Ticket médio por projeto</label>
+      <div class="input-value" id="ticket-display">R$ <span>14.000</span></div>
+      <input type="range" id="ticket" min="5000" max="50000" step="500" value="14000" oninput="calc()">
+      <div class="input-hint">R$ 5k → R$ 50k</div>
+    </div>
+
+    <div class="input-card full">
+      <label>Taxa de conversão (leads → vendas)</label>
+      <div class="input-value" id="tc-display"><span>8</span>%</div>
+      <input type="range" id="tc" min="1" max="40" step="1" value="8" oninput="calc()">
+      <div class="input-hint">8% é conservador e realista para um processo novo. Conforme o funil amadurece, tende a 15–25%.</div>
+    </div>
+
+  </div>
+
+  <!-- DIVIDER -->
+  <div class="divider">resultado do cálculo</div>
+
+  <!-- RESULTS -->
+  <div class="results-grid">
+    <div class="result-card">
+      <div class="result-label">Leads mínimos (LMN)</div>
+      <div class="result-value" id="lmn">27</div>
+      <div class="result-sub">leads qualificados/mês</div>
+    </div>
+    <div class="result-card green">
+      <div class="result-label">Projetos necessários</div>
+      <div class="result-value" id="proj">3</div>
+      <div class="result-sub">para bater a meta</div>
+    </div>
+    <div class="result-card blue">
+      <div class="result-label">Leads por semana</div>
+      <div class="result-value" id="porsem">7</div>
+      <div class="result-sub">ritmo semanal necessário</div>
+    </div>
+  </div>
+
+  <!-- FORMULA -->
+  <div class="formula-box" id="formula">
+    <strong>LMN</strong> = Meta ÷ (Ticket Médio × Taxa de Conversão)<br>
+    <strong>LMN</strong> = R$ 30.000 ÷ (R$ 14.000 × 8%) = <span class="highlight">27 leads</span>
+  </div>
+
+  <!-- INSIGHT -->
+  <div class="insight ok" id="insight">
+    <div class="insight-icon">✦</div>
+    <div id="insight-text">27 leads em 1 mês é viável combinando indicações da rede atual com as primeiras ações no Instagram e Google Meu Negócio.</div>
+  </div>
+
+  <!-- WEEKS -->
+  <div class="section-label">Distribuição semanal</div>
+  <div class="weeks-grid" id="weeks"></div>
+
+  <!-- PRACTICAL -->
+  <div class="section-label">O que isso significa na prática</div>
+  <div class="pratica-list" id="pratica"></div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-brand"><span>N.O.T.T.L.E.K™</span> — Método de Escala para Integradoras Solares</div>
+    <div class="footer-note">Calculadora de Previsibilidade · Núcleo Comercial</div>
+  </div>
+
+</div>
+
+<script>
+function fmt(n) {
+  return 'R$ ' + Math.round(n).toLocaleString('pt-BR');
+}
+
+function calc() {
+  const meta   = +document.getElementById('meta').value;
+  const ticket = +document.getElementById('ticket').value;
+  const tc     = +document.getElementById('tc').value;
+
+  // Update displays
+  document.getElementById('meta-display').innerHTML   = 'R$ <span>' + Math.round(meta).toLocaleString('pt-BR') + '</span>';
+  document.getElementById('ticket-display').innerHTML = 'R$ <span>' + Math.round(ticket).toLocaleString('pt-BR') + '</span>';
+  document.getElementById('tc-display').innerHTML     = '<span>' + tc + '</span>%';
+
+  // Calculations
+  const lmn    = Math.ceil(meta / (ticket * (tc / 100)));
+  const proj   = Math.ceil(meta / ticket);
+  const porSem = Math.ceil(lmn / 4);
+
+  document.getElementById('lmn').textContent    = lmn;
+  document.getElementById('proj').textContent   = proj;
+  document.getElementById('porsem').textContent = porSem;
+
+  // Formula
+  document.getElementById('formula').innerHTML =
+    '<strong>LMN</strong> = Meta ÷ (Ticket Médio × Taxa de Conversão)<br>' +
+    '<strong>LMN</strong> = ' + fmt(meta) + ' ÷ (' + fmt(ticket) + ' × ' + tc + '%) = <span class="highlight">' + lmn + ' leads</span>';
+
+  // Insight
+  const insightEl = document.getElementById('insight');
+  const insightTxt = document.getElementById('insight-text');
+  if (lmn <= 35) {
+    insightEl.className = 'insight ok';
+    insightEl.querySelector('.insight-icon').textContent = '✦';
+    insightTxt.textContent = lmn + ' leads em 1 mês é viável para uma operação iniciando a captação — combinando indicações ativas com presença digital.';
+  } else if (lmn <= 70) {
+    insightEl.className = 'insight warn';
+    insightEl.querySelector('.insight-icon').textContent = '⚠';
+    insightTxt.textContent = lmn + ' leads é desafiador para o início. Considere reduzir a meta ou priorizar projetos de ticket mais alto para precisar de menos fechamentos.';
+  } else {
+    insightEl.className = 'insight warn';
+    insightEl.querySelector('.insight-icon').textContent = '⚠';
+    insightTxt.textContent = lmn + ' leads em 1 mês está fora do alcance para um processo novo. Recomendo calibrar a meta ou ampliar o ticket médio com projetos premium.';
+  }
+
+  // Weeks
+  const weeksEl = document.getElementById('weeks');
+  weeksEl.innerHTML = '';
+  for (let i = 1; i <= 4; i++) {
+    const w = i < 4 ? porSem : Math.max(1, lmn - porSem * 3);
+    weeksEl.innerHTML += '<div class="week-card">' +
+      '<div class="week-label">Semana ' + i + '</div>' +
+      '<div class="week-value">' + w + '</div>' +
+      '<div class="week-sub">leads</div>' +
+      '</div>';
+  }
+
+  // Practical
+  document.getElementById('pratica').innerHTML =
+    '<div class="pratica-item"><div class="icon g">✓</div><div>Fechar <strong>' + proj + ' projeto' + (proj > 1 ? 's' : '') + '</strong> no mês já gera ' + fmt(proj * ticket) + ' — batendo a meta de ' + fmt(meta) + '.</div></div>' +
+    '<div class="pratica-item"><div class="icon b">→</div><div>Para isso, você precisa de <strong>' + lmn + ' leads qualificados</strong> — ritmo de ' + porSem + ' por semana, todos os dias respondidos em até 30 minutos.</div></div>' +
+    '<div class="pratica-item"><div class="icon y">!</div><div>Com processo novo, ative a rede de indicações: <strong>peça 2 indicações de cada cliente satisfeito</strong> — o custo de aquisição é zero.</div></div>' +
+    '<div class="pratica-item"><div class="icon y">!</div><div>Conforme a taxa de conversão evoluir de ' + tc + '% para 15–20%, o mesmo volume de leads vai gerar <strong>muito mais receita sem aumentar captação</strong>.</div></div>';
+
+  // Update slider fill visual
+  ['meta','ticket','tc'].forEach(function(id) {
+    const el = document.getElementById(id);
+    const min = +el.min, max = +el.max, val = +el.value;
+    const pct = ((val - min) / (max - min)) * 100;
+    el.style.background = 'linear-gradient(to right, #F97316 ' + pct + '%, rgba(255,255,255,0.1) ' + pct + '%)';
+  });
+}
+
+calc();
+</script>
+</body>
+</html>
