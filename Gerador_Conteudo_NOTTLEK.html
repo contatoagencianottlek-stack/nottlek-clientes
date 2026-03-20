@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Gerador de Conteúdo · N.O.T.T.L.E.K™</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --gold:#c9962a;--gold2:#e8b84b;
+  --dark:#080b10;--dark2:#0f1318;--dark3:#161c24;--dark4:#1e2530;
+  --border:rgba(255,255,255,0.08);--text:#e2e8f0;--muted:#4a5568;
+  --green:#22c55e;--red:#ef4444;--radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--text);min-height:100vh;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:var(--dark4);}
+
+/* NAV */
+nav{padding:14px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);background:rgba(8,11,16,0.98);position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:11px;letter-spacing:4px;color:var(--gold);}
+.nav-tag{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);}
+
+/* HERO */
+.hero{padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:8px;}
+.hero-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;line-height:1.1;margin-bottom:8px;}
+.hero-title em{color:var(--gold);font-style:normal;}
+.hero-sub{color:var(--muted);font-size:13px;line-height:1.65;}
+
+/* FORM */
+.form-section{padding:24px 20px;border-bottom:1px solid var(--border);}
+.form-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:8px;display:block;}
+.form-input{width:100%;background:var(--dark2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;font-size:15px;color:var(--text);outline:none;font-family:'DM Sans',sans-serif;resize:none;line-height:1.6;transition:border-color .2s;}
+.form-input:focus{border-color:rgba(201,150,42,0.4);}
+.form-input::placeholder{color:var(--muted);}
+.char-count{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-align:right;margin-top:4px;}
+
+/* TIPO */
+.tipo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;}
+.tipo-btn{background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:center;cursor:pointer;transition:all .2s;}
+.tipo-btn.ativo{background:rgba(201,150,42,0.1);border-color:rgba(201,150,42,0.4);}
+.tipo-btn-icon{font-size:18px;margin-bottom:4px;}
+.tipo-btn-label{font-size:11px;font-weight:600;color:var(--muted);}
+.tipo-btn.ativo .tipo-btn-label{color:var(--gold);}
+
+/* FORMATO */
+.formato-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.formato-chip{background:var(--dark3);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:11px;color:var(--muted);cursor:pointer;transition:all .2s;font-family:'DM Mono',monospace;}
+.formato-chip.ativo{background:rgba(201,150,42,0.1);border-color:rgba(201,150,42,0.4);color:var(--gold);}
+
+/* GERAR BTN */
+.gerar-btn{width:100%;background:var(--gold);color:#000;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;padding:16px;border-radius:var(--radius);border:none;cursor:pointer;letter-spacing:1px;transition:all .2s;margin-top:20px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.gerar-btn:hover{background:var(--gold2);}
+.gerar-btn:disabled{background:var(--dark3);color:var(--muted);cursor:not-allowed;}
+
+/* LOADING */
+.loading{padding:40px 20px;text-align:center;display:none;}
+.loading.show{display:block;}
+.loading-spinner{width:36px;height:36px;border:3px solid var(--dark4);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-text{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);}
+.loading-msgs{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
+.loading-msg{font-size:12px;color:var(--muted);opacity:0;transition:opacity .3s;}
+.loading-msg.show{opacity:1;color:var(--gold);}
+
+/* OUTPUT */
+.output{padding:20px;display:none;}
+.output.show{display:block;}
+
+.output-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.output-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;}
+.novo-btn{background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:8px 16px;color:var(--muted);font-size:12px;cursor:pointer;font-family:'DM Mono',monospace;}
+
+.bloco{background:var(--dark2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;}
+.bloco-header{padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);cursor:pointer;}
+.bloco-titulo{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;font-weight:700;}
+.bloco-titulo.hook{color:#60a5fa;}
+.bloco-titulo.roteiro{color:var(--gold);}
+.bloco-titulo.legenda{color:#4ade80;}
+.bloco-titulo.cta{color:#f87171;}
+.bloco-titulo.dicas{color:#a78bfa;}
+.bloco-titulo.viralizacao{color:#facc15;}
+.bloco-chevron{color:var(--muted);font-size:14px;transition:transform .3s;}
+.bloco.fechado .bloco-chevron{transform:rotate(-90deg);}
+.bloco-body{padding:16px;}
+.bloco.fechado .bloco-body{display:none;}
+
+.bloco-content{font-size:14px;line-height:1.8;color:#cbd5e0;white-space:pre-wrap;}
+.bloco-content strong{color:#fff;}
+.bloco-content em{color:var(--gold);font-style:normal;}
+
+.copy-btn{background:var(--dark3);border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;margin-top:10px;transition:all .2s;display:block;width:100%;text-align:center;}
+.copy-btn:hover{border-color:rgba(201,150,42,0.3);color:var(--gold);}
+.copy-btn.copied{border-color:rgba(34,197,94,0.3);color:#4ade80;}
+
+/* CENAS */
+.cena{background:var(--dark3);border-radius:10px;padding:14px;margin-bottom:10px;border-left:3px solid var(--gold);}
+.cena:last-child{margin-bottom:0;}
+.cena-tempo{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:6px;font-weight:700;}
+.cena-texto{font-size:13px;color:#cbd5e0;line-height:1.7;}
+.cena-nota{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5;}
+
+/* SCORE */
+.score-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.score-item{background:var(--dark3);border-radius:8px;padding:8px 12px;flex:1;min-width:80px;text-align:center;}
+.score-num{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;line-height:1;}
+.score-label{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px;}
+.score-viral .score-num{color:#facc15;}
+.score-valor .score-num{color:var(--gold);}
+.score-hook .score-num{color:#60a5fa;}
+
+/* HISTORICO */
+.historico-section{padding:20px;border-top:1px solid var(--border);}
+.hist-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--muted);margin-bottom:12px;}
+.hist-items{display:flex;flex-direction:column;gap:8px;}
+.hist-item{background:var(--dark2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .15s;}
+.hist-item:hover{border-color:rgba(201,150,42,0.3);}
+.hist-item-titulo{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.hist-item-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
+
+footer{padding:24px 20px;text-align:center;border-top:1px solid var(--border);}
+.footer-text{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">N.O.T.T.L.E.K™</div>
+  <div class="nav-tag">GERADOR DE CONTEÚDO</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">IA · ROTEIRO COMPLETO</div>
+  <h1 class="hero-title">Cria conteúdo que<br/><em>entrega valor</em> e prende.</h1>
+  <p class="hero-sub">Digita o título ou a ideia. A IA gera hook, roteiro, legenda, CTA e dicas de gravação — tudo pronto pra gravar.</p>
+</div>
+
+<!-- FORM -->
+<div class="form-section">
+  <label class="form-label">TÍTULO OU IDEIA DO CONTEÚDO</label>
+  <textarea class="form-input" id="titulo" rows="3" placeholder="Ex: Por que sua integradora perde venda depois de mandar proposta&#10;Ex: O que aprendi ligando pra 70 integradoras em um dia&#10;Ex: A calculadora que mostra quantos leads você precisa por semana" maxlength="300" oninput="updateChar()"></textarea>
+  <div class="char-count"><span id="charCount">0</span>/300</div>
+
+  <label class="form-label" style="margin-top:16px;">TIPO DE CONTEÚDO</label>
+  <div class="tipo-grid">
+    <div class="tipo-btn ativo" onclick="selectTipo(this,'bastidor')" data-tipo="bastidor">
+      <div class="tipo-btn-icon">🎬</div>
+      <div class="tipo-btn-label">Bastidor real</div>
+    </div>
+    <div class="tipo-btn" onclick="selectTipo(this,'educativo')" data-tipo="educativo">
+      <div class="tipo-btn-icon">🧠</div>
+      <div class="tipo-btn-label">Educativo</div>
+    </div>
+    <div class="tipo-btn" onclick="selectTipo(this,'provocacao')" data-tipo="provocacao">
+      <div class="tipo-btn-icon">🔥</div>
+      <div class="tipo-btn-label">Provocação</div>
+    </div>
+    <div class="tipo-btn" onclick="selectTipo(this,'resultado')" data-tipo="resultado">
+      <div class="tipo-btn-icon">📊</div>
+      <div class="tipo-btn-label">Resultado</div>
+    </div>
+  </div>
+
+  <label class="form-label" style="margin-top:16px;">DURAÇÃO</label>
+  <div class="formato-grid">
+    <div class="formato-chip" onclick="selectFormato(this,'30s')" data-fmt="30s">30s</div>
+    <div class="formato-chip ativo" onclick="selectFormato(this,'60s')" data-fmt="60s">60s</div>
+    <div class="formato-chip" onclick="selectFormato(this,'90s')" data-fmt="90s">90s</div>
+  </div>
+
+  <button class="gerar-btn" id="gerarBtn" onclick="gerarConteudo()">
+    <span>⚡</span> GERAR CONTEÚDO COMPLETO
+  </button>
+</div>
+
+<!-- LOADING -->
+<div class="loading" id="loading">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Criando seu conteúdo...</div>
+  <div class="loading-msgs" id="loadingMsgs">
+    <div class="loading-msg" id="msg1">Analisando o hook ideal...</div>
+    <div class="loading-msg" id="msg2">Estruturando as cenas...</div>
+    <div class="loading-msg" id="msg3">Escrevendo a legenda...</div>
+    <div class="loading-msg" id="msg4">Calibrando para máximo valor...</div>
+  </div>
+</div>
+
+<!-- OUTPUT -->
+<div class="output" id="output">
+  <div class="output-header">
+    <div class="output-title">Conteúdo gerado</div>
+    <button class="novo-btn" onclick="novoConteudo()">+ NOVO</button>
+  </div>
+  <div id="scoreBar" class="score-bar"></div>
+  <div id="outputContent"></div>
+</div>
+
+<!-- HISTÓRICO -->
+<div class="historico-section" id="historicoSection" style="display:none;">
+  <div class="hist-title">GERADOS RECENTEMENTE</div>
+  <div class="hist-items" id="histItems"></div>
+</div>
+
+<footer>
+  <div class="footer-text">N.O.T.T.L.E.K™ · KELTTON BELIZARIO · GERADOR DE CONTEÚDO</div>
+</footer>
+
+<script>
+let tipoAtual = 'bastidor';
+let formatoAtual = '60s';
+let historico = JSON.parse(localStorage.getItem('nottlek_hist') || '[]');
+
+function updateChar(){
+  const t = document.getElementById('titulo');
+  document.getElementById('charCount').textContent = t.value.length;
+}
+
+function selectTipo(el, tipo){
+  document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('ativo'));
+  el.classList.add('ativo');
+  tipoAtual = tipo;
+}
+
+function selectFormato(el, fmt){
+  document.querySelectorAll('.formato-chip').forEach(b => b.classList.remove('ativo'));
+  el.classList.add('ativo');
+  formatoAtual = fmt;
+}
+
+function novoConteudo(){
+  document.getElementById('output').classList.remove('show');
+  document.getElementById('titulo').value = '';
+  document.getElementById('charCount').textContent = '0';
+  document.getElementById('gerarBtn').disabled = false;
+  window.scrollTo(0,0);
+}
+
+const tipoLabels = {
+  bastidor: 'Bastidor real — mostra o que você está fazendo no projeto com a integradora cliente',
+  educativo: 'Educativo — entrega conhecimento técnico denso sobre processo comercial solar',
+  provocacao: 'Provocação — questiona crenças do dono de integradora, gera debate e compartilhamento',
+  resultado: 'Resultado — documenta um resultado real ou aprendizado concreto da operação'
+};
+
+async function gerarConteudo(){
+  const titulo = document.getElementById('titulo').value.trim();
+  if(!titulo){ 
+    document.getElementById('titulo').focus();
+    return; 
+  }
+
+  document.getElementById('gerarBtn').disabled = true;
+  document.getElementById('output').classList.remove('show');
+  document.getElementById('historicoSection').style.display = 'none';
+
+  const loading = document.getElementById('loading');
+  loading.classList.add('show');
+
+  // Animação de loading
+  const msgs = ['msg1','msg2','msg3','msg4'];
+  let mi = 0;
+  const msgInterval = setInterval(()=>{
+    if(mi < msgs.length){
+      document.getElementById(msgs[mi]).classList.add('show');
+      mi++;
+    }
+  }, 700);
+
+  const prompt = `Você é Keltton Belizario, fundador do Método N.O.T.T.L.E.K™ — Engenharia de Vendas para Integradoras Solares. Você cria conteúdo denso, real e de valor extremo para donos de integradora solar.
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+CONTEXTO DO CRIADOR
+━━━━━━━━━━━━━━━━━━━━━━━━
+- Perfil: @okelttonbeli — perfil novo, crescendo com conteúdo de autoridade real
+- 1 cliente ativo: SoleSol Energia Solar (Petrolina/PE) — integradora residencial e comercial
+- Prospecta ativamente: liga pra 20-70 integradoras por dia, script SPIN adaptado
+- Método próprio: N.O.T.T.L.E.K™ — 7 pilares: Núcleo Comercial / Otimização de Funil / Tráfego Estratégico / Técnica de Fechamento / Liderança / Escala / KPI & Controle
+- Público: donos de integradora solar residencial e comercial, ticket médio R$14.000, que dependem de indicação e querem processo comercial previsível
+- Tom: autoridade consultiva, direto, sem enrolação, entrega ouro antes de pedir qualquer coisa
+- Diferencial: documenta a jornada real — erros, aprendizados, bastidores de cliente real
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+DADOS REAIS QUE PODE USAR
+━━━━━━━━━━━━━━━━━━━━━━━━
+- 70% das vendas solares fecham após o 5º contato — 90% dos vendedores desistem no 2º
+- Ticket médio solar residencial: R$12.000 a R$16.000
+- Lead solar esfria em menos de 5 minutos sem resposta
+- Taxa de conversão média de integradora sem processo: 5-8%
+- Com processo estruturado: 15-25%
+- CAC estimado com tráfego pago: R$400-R$600 por cliente fechado
+- Integradora que depende de indicação tem variação de até 60% no faturamento mês a mês
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+PSICOLOGIA E ALGORITMO — O QUE REALMENTE FUNCIONA EM 2026
+━━━━━━━━━━━━━━━━━━━━━━━━
+ALGORITMO:
+- Instagram prioriza interesse, não seguidores — perfil pequeno pode viralizar com métricas boas
+- As 3 métricas que mais importam: shares per reach > saves > watch time (acima de 70%)
+- Likes é a métrica menos importante
+- O algoritmo testa o vídeo com 200-500 pessoas nos primeiros 60 minutos — se elas assistem e compartilham, expande
+- Duração ideal: 15-45s para alcance máximo, 45-90s para autoridade e densidade
+
+PSICOLOGIA DA ATENÇÃO:
+- Cérebro decide em 50 milissegundos se algo merece atenção — você não tem 3 segundos, tem 0,05
+- Efeito Zeigarnik: loop aberto no hook força o espectador a assistir até o fim pra "fechar" a pergunta
+- Recompensa variável dopaminérgica: surpresa > identificação > curiosidade — acione um dos três
+- 5 emoções que mais geram compartilhamento: identificação / surpresa / indignação / inspiração / utilidade
+- Especificidade bate generalidade: "R$14.000 de ticket" > "ticket alto"
+
+PRINCÍPIOS DE CONTEÚDO DENSO:
+1. Hook começa FALANDO — nunca cumprimento, nunca apresentação
+2. Uma ideia por vídeo — executada com profundidade total
+3. A "frase que cola" — uma linha que funciona fora de contexto e fica na cabeça
+4. Entrega ouro nos primeiros 45s — CTA só depois
+5. Dado específico > opinião genérica sempre
+6. Mostra o problema ANTES da solução — o espectador precisa se ver no problema
+7. Linguagem de quem executa, não de quem teoriza
+8. Legenda complementa o vídeo — não repete, não resume, adiciona camada nova
+9. CTA com reciprocidade: "comenta X que te mando Y" — não "me segue"
+10. Autenticidade > produção: câmera tremida e verdade bate câmera 4K e conteúdo fabricado
+
+FORMATOS COM MAIOR POTENCIAL VIRAL:
+- "Você tá errando isso" → ativa ego, todos param pra ouvir
+- "Ninguém te conta isso" → promessa de exclusividade
+- "Eu fiz X e aprendi Y" → bastidor + aprendizado
+- "A diferença entre X e Y" → contraste visual e conceitual
+- "X coisas que..." → salvável, previsível, satisfatório
+- "Dado chocante" → número específico que muda perspectiva
+- "Reframe" → mesmo problema, ângulo novo
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+PEDIDO
+━━━━━━━━━━━━━━━━━━━━━━━━
+TÍTULO/IDEIA: ${titulo}
+TIPO: ${tipoLabels[tipoAtual]}
+DURAÇÃO: ${formatoAtual}
+
+Crie conteúdo DENSO e de VALOR REAL. Não teoria genérica. Use dados reais. Entregue ouro.
+A "frase que cola" é obrigatória — deve ser memorizável e funcionar fora de contexto.
+O roteiro deve ter especificidade cirúrgica — o que dizer palavra por palavra, não "fale sobre X".
+
+Responda SOMENTE com JSON puro, sem markdown, sem explicação:
+
+{
+  "hook": "frase exata dos primeiros 2-3 segundos — para o scroll — começa direto falando",
+  "hook_variantes": ["variante 2 com ângulo diferente", "variante 3 com ângulo diferente"],
+  "frase_que_cola": "a frase memorável que o espectador vai lembrar depois — funciona fora de contexto",
+  "gatilho_psicologico": "qual dos 3 gatilhos o hook usa: surpresa / identificação / curiosidade",
+  "emocao_principal": "qual das 5 emoções esse conteúdo ativa: identificação / surpresa / indignação / inspiração / utilidade",
+  "score_viral": número inteiro de 1 a 10,
+  "score_valor": número inteiro de 1 a 10,
+  "score_hook": número inteiro de 1 a 10,
+  "roteiro": [
+    {"tempo": "0–3s", "cena": "o que fala palavra por palavra", "nota": "dica técnica de execução"},
+    {"tempo": "3–12s", "cena": "o que fala ou mostra — problema nomeado com precisão", "nota": "dica técnica"},
+    {"tempo": "12–35s", "cena": "o ouro — dado real, insight denso, método específico", "nota": "dica técnica"},
+    {"tempo": "35–50s", "cena": "prova ou exemplo real — bastidor, número, case", "nota": "dica técnica"},
+    {"tempo": "50–58s", "cena": "a frase que cola — conclusão memorável", "nota": "fala devagar aqui"},
+    {"tempo": "58–65s", "cena": "CTA palavra por palavra", "nota": "dica técnica"}
+  ],
+  "legenda": "legenda completa com quebras de linha — começa com gancho forte — adiciona camada que o vídeo não tem — termina com CTA — máximo 120 palavras",
+  "cta_palavra": "PALAVRA em maiúsculas pra comentar",
+  "cta_o_que_entregar": "o que você manda no direct quando a pessoa comentar — seja específico",
+  "dicas_gravacao": ["dica específica 1", "dica específica 2", "dica específica 3", "dica específica 4"],
+  "por_que_viraliza": "2-3 frases explicando por que esse conteúdo específico tem potencial — baseado em psicologia e algoritmo",
+  "melhor_horario": "horário e dia ideal pra postar",
+  "aviso_erro_comum": "o erro mais comum que arruinaria esse conteúdo na gravação"
+}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    clearInterval(msgInterval);
+    msgs.forEach(m => document.getElementById(m).classList.remove('show'));
+    loading.classList.remove('show');
+
+    const data = await res.json();
+    const raw = data.content[0].text.replace(/```json|```/g,'').trim();
+    const content = JSON.parse(raw);
+
+    renderOutput(titulo, content);
+    salvarHistorico(titulo, content);
+
+  } catch(e) {
+    clearInterval(msgInterval);
+    loading.classList.remove('show');
+    document.getElementById('gerarBtn').disabled = false;
+    alert('Erro ao gerar. Tenta de novo.');
+  }
+}
+
+function renderOutput(titulo, c){
+  // Score
+  document.getElementById('scoreBar').innerHTML = `
+    <div class="score-item score-viral"><div class="score-num">${c.score_viral}/10</div><div class="score-label">VIRAL</div></div>
+    <div class="score-item score-valor"><div class="score-num">${c.score_valor}/10</div><div class="score-label">VALOR</div></div>
+    <div class="score-item score-hook"><div class="score-num">${c.score_hook}/10</div><div class="score-label">HOOK</div></div>
+    <div class="score-item"><div class="score-num" style="color:#a78bfa;font-size:11px;margin-top:4px;line-height:1.3">${c.melhor_horario}</div><div class="score-label">POSTAR</div></div>
+  `;
+
+  let html = '';
+
+  // FRASE QUE COLA
+  if(c.frase_que_cola){
+    html += `<div class="bloco" id="b-frase">
+      <div class="bloco-header" onclick="toggleBloco('b-frase')">
+        <span class="bloco-titulo viralizacao">💡 A FRASE QUE COLA</span>
+        <span class="bloco-chevron">▾</span>
+      </div>
+      <div class="bloco-body">
+        <div class="cena">
+          <div class="cena-tempo">MEMORIZE ESSA — ELA É O CORAÇÃO DO VÍDEO</div>
+          <div class="cena-texto" style="font-size:16px;font-style:italic;color:var(--gold);line-height:1.6">"${c.frase_que_cola}"</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+          ${c.gatilho_psicologico ? `<span style="background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.2);border-radius:20px;padding:4px 12px;font-size:11px;color:#60a5fa;font-family:'DM Mono',monospace;">🧠 ${c.gatilho_psicologico}</span>` : ''}
+          ${c.emocao_principal ? `<span style="background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.2);border-radius:20px;padding:4px 12px;font-size:11px;color:#facc15;font-family:'DM Mono',monospace;">❤️ ${c.emocao_principal}</span>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // HOOK
+  html += `<div class="bloco" id="b-hook">
+    <div class="bloco-header" onclick="toggleBloco('b-hook')">
+      <span class="bloco-titulo hook">🎯 HOOK — PRIMEIROS 3 SEGUNDOS</span>
+      <span class="bloco-chevron">▾</span>
+    </div>
+    <div class="bloco-body">
+      <div class="cena">
+        <div class="cena-tempo">PRINCIPAL — COMEÇA FALANDO ISSO</div>
+        <div class="cena-texto" style="font-size:16px">"${c.hook}"</div>
+      </div>
+      ${(c.hook_variantes||[]).map((v,i)=>`
+      <div class="cena">
+        <div class="cena-tempo">VARIANTE ${i+2}</div>
+        <div class="cena-texto">"${v}"</div>
+      </div>`).join('')}
+      <button class="copy-btn" onclick="copiar(this,'${escapeStr(c.hook)}')">COPIAR HOOK PRINCIPAL</button>
+    </div>
+  </div>`;
+
+  // ROTEIRO
+  html += `<div class="bloco" id="b-roteiro">
+    <div class="bloco-header" onclick="toggleBloco('b-roteiro')">
+      <span class="bloco-titulo roteiro">🎬 ROTEIRO CENA POR CENA</span>
+      <span class="bloco-chevron">▾</span>
+    </div>
+    <div class="bloco-body">
+      ${(c.roteiro||[]).map(r=>`
+      <div class="cena">
+        <div class="cena-tempo">${r.tempo}</div>
+        <div class="cena-texto">${r.cena}</div>
+        ${r.nota ? `<div class="cena-nota">↳ ${r.nota}</div>` : ''}
+      </div>`).join('')}
+    </div>
+  </div>`;
+
+  // LEGENDA
+  html += `<div class="bloco" id="b-legenda">
+    <div class="bloco-header" onclick="toggleBloco('b-legenda')">
+      <span class="bloco-titulo legenda">📝 LEGENDA COMPLETA</span>
+      <span class="bloco-chevron">▾</span>
+    </div>
+    <div class="bloco-body">
+      <div class="bloco-content">${c.legenda}\n\nComenta <strong>${c.cta_palavra}</strong> 👇</div>
+      <button class="copy-btn" id="copyLeg" onclick="copiar(this,${JSON.stringify(c.legenda + '\n\nComenta ' + c.cta_palavra + ' 👇')})">COPIAR LEGENDA</button>
+    </div>
+  </div>`;
+
+  // CTA
+  html += `<div class="bloco" id="b-cta">
+    <div class="bloco-header" onclick="toggleBloco('b-cta')">
+      <span class="bloco-titulo cta">🎯 CTA COMPLETO</span>
+      <span class="bloco-chevron">▾</span>
+    </div>
+    <div class="bloco-body">
+      <div class="cena">
+        <div class="cena-tempo">PALAVRA DO COMENTÁRIO</div>
+        <div class="cena-texto" style="font-size:26px;font-weight:800;color:var(--gold)">${c.cta_palavra}</div>
+      </div>
+      <div class="cena">
+        <div class="cena-tempo">FALAR NO VÍDEO</div>
+        <div class="cena-texto">"Comenta ${c.cta_palavra} aqui embaixo que te mando ${c.cta_o_que_entregar||'no Direct'}."</div>
+      </div>
+      ${c.cta_o_que_entregar ? `<div class="cena">
+        <div class="cena-tempo">O QUE ENTREGAR NO DIRECT</div>
+        <div class="cena-texto">${c.cta_o_que_entregar}</div>
+      </div>` : ''}
+    </div>
+  </div>`;
+
+  // AVISO
+  if(c.aviso_erro_comum){
+    html += `<div class="bloco" id="b-aviso">
+      <div class="bloco-header" onclick="toggleBloco('b-aviso')">
+        <span class="bloco-titulo cta">⚠️ ERRO QUE VAI ARRUINAR ESSE VÍDEO</span>
+        <span class="bloco-chevron">▾</span>
+      </div>
+      <div class="bloco-body">
+        <div class="cena" style="border-left-color:#ef4444">
+          <div class="cena-texto" style="color:#fca5a5">${c.aviso_erro_comum}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // DICAS
+  html += `<div class="bloco" id="b-dicas">
+    <div class="bloco-header" onclick="toggleBloco('b-dicas')">
+      <span class="bloco-titulo dicas">📱 DICAS DE GRAVAÇÃO</span>
+      <span class="bloco-chevron">▾</span>
+    </div>
+    <div class="bloco-body">
+      ${(c.dicas_gravacao||[]).map((d,i)=>`
+      <div class="cena">
+        <div class="cena-tempo">DICA ${i+1}</div>
+        <div class="cena-texto">${d}</div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+
+  // POR QUE VIRALIZA
+  html += `<div class="bloco" id="b-viral">
+    <div class="bloco-header" onclick="toggleBloco('b-viral')">
+      <span class="bloco-titulo viralizacao">🔥 POR QUE ESSE CONTEÚDO FUNCIONA</span>
+      <span class="bloco-chevron">▾</span>
+    </div>
+    <div class="bloco-body">
+      <div class="bloco-content">${c.por_que_viraliza}</div>
+    </div>
+  </div>`;
+
+  document.getElementById('outputContent').innerHTML = html;
+  document.getElementById('output').classList.add('show');
+  document.getElementById('gerarBtn').disabled = false;
+
+  setTimeout(()=>{
+    document.getElementById('output').scrollIntoView({behavior:'smooth'});
+  }, 100);
+}
+
+function toggleBloco(id){
+  document.getElementById(id).classList.toggle('fechado');
+}
+
+function copiar(btn, texto){
+  navigator.clipboard.writeText(texto).then(()=>{
+    btn.textContent = '✓ COPIADO';
+    btn.classList.add('copied');
+    setTimeout(()=>{
+      btn.textContent = btn.textContent.includes('HOOK') ? 'COPIAR HOOK PRINCIPAL' : 'COPIAR LEGENDA';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+function escapeStr(s){
+  return s.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+}
+
+function salvarHistorico(titulo, content){
+  historico.unshift({ titulo, score_viral: content.score_viral, hook: content.hook, ts: new Date().toLocaleDateString('pt-BR') });
+  if(historico.length > 10) historico = historico.slice(0,10);
+  localStorage.setItem('nottlek_hist', JSON.stringify(historico));
+  renderHistorico();
+}
+
+function renderHistorico(){
+  if(historico.length === 0) return;
+  const sec = document.getElementById('historicoSection');
+  const items = document.getElementById('histItems');
+  sec.style.display = 'block';
+  items.innerHTML = historico.slice(0,5).map(h=>`
+    <div class="hist-item">
+      <div class="hist-item-titulo">${h.titulo}</div>
+      <div class="hist-item-meta">⚡ ${h.score_viral}/10 viral · ${h.ts}</div>
+    </div>
+  `).join('');
+}
+
+// Init
+renderHistorico();
+</script>
+</body>
+</html>
